@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Jumping</string>
+    <string name="prev_date">이전</string>
+    <string name="next_date">이후</string>
+    <string name="tab_button_title_customer">고객</string>
+    <string name="tab_button_title_goods">상품</string>
+    <string name="tab_button_title_calculate">정산</string>
+    <string name="customer_menu_button_input">고객 입장</string>
+    <string name="customer_menu_button_registration">고객 등록</string>
+    <string name="customer_menu_button_search">고객 조회</string>
+    <string name="customer_menu_button_addition">추가 구매</string>
+    <string name="customer_search">조회</string>
+    <string name="customer_search_hint">홍길동</string>
+    <string name="name">이름</string>
+    <string name="date">날짜</string>
+    <string name="phone">전화번호</string>
+    <string name="phone_hint">010-1111-2222</string>
+    <string name="parents_phone">부모 전화번호</string>
+    <string name="input_price">매입가격</string>
+    <string name="sales_price">판매가격</string>
+    <string name="customer_using_play_time">이용시간</string>
+
+    <string-array name="customer_using_time_items">
+        <item>@string/select</item>
+        <item>@string/customer_using_play_30_minute</item>
+        <item>@string/customer_using_play_one_hour</item>
+        <item>@string/customer_using_play_two_hour</item>
+        <item>@string/customer_using_play_three_hour</item>
+        <item>@string/customer_using_play_four_hour</item>
+    </string-array>
+
+    <string name="customer_using_play_30_minute">30분</string>
+    <string name="customer_using_play_one_hour">1시간</string>
+    <string name="customer_using_play_two_hour">2시간</string>
+    <string name="customer_using_play_three_hour">3시간</string>
+    <string name="customer_using_play_four_hour">4시간</string>
+    <string name="customer_using_start_time">시작시간</string>
+    <string name="customer_using_end_time">종료시간</string>
+    <string name="customer_parent_accompany_yn">보호자</string>
+    <string name="customer_parent_accompany_yes">있음</string>
+    <string name="customer_parent_accompany_no">없음</string>
+    <string name="customer_parent_tea">부모음료</string>
+    <string name="customer_add_goods">추가구매</string>
+    <string name="customer_add_memo">메모</string>
+    <string name="select">선택</string>
+    <string name="camera">카메라</string>
+    <string name="gallery">갤러리</string>
+    <string name="registration">등록</string>
+    <string name="permission_storage">파일 쓰기 접근 권한이 필요해요</string>
+    <string name="permission_setting">[설정] > [권한] 에서 권한을 허용할 수 있어요.</string>
+    <string name="permission_granted">권한 허가</string>
+    <string name="permission_denied">권한 거부</string>
+    <string name="photo_cancel">취소 되었습니다.</string>
+    <string name="customer_save_ok">고객 정보가 정상적으로 저장 되었습니다.</string>
+    <string name="input_name_please">이름을 입력해 주세요.</string>
+</resources>

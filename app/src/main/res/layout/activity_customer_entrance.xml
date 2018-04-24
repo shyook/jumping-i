@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:id="@+id/customer_search_ll"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 조회 영역 -->
+        <EditText
+            android:id="@+id/customer_search_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@xml/background_white_and_underline"
+            android:padding="5dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:gravity="center"
+            android:hint="@string/customer_search_hint" />
+        <Button
+            android:id="@+id/customer_search_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/co_line_btn_red_selector"
+            android:padding="5dp"
+            android:text="@string/customer_search" />
+    </LinearLayout>
+
+    <!-- 이름 / 이용 시간 영역 -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:baselineAligned="false"
+        android:layout_below="@id/customer_search_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/customer_enterance_name_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/customer_name_tv"
+                android:layout_margin="10dp"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name" />
+
+            <EditText
+                android:id="@+id/customer_name_et"
+                android:background="@xml/background_white_and_underline"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:focusableInTouchMode="false" />
+
+            <TextView
+                android:id="@+id/customer_using_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/customer_using_play_time" />
+
+            <Spinner
+                android:id="@+id/customer_using_time_spinner"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:prompt="@string/select"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- 시작 / 끝 시간 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_enterance_time_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/customer_start_time_tv"
+                android:layout_margin="10dp"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customer_using_start_time" />
+
+            <EditText
+                android:id="@+id/customer_start_time_et"
+                android:background="@xml/background_white_and_underline"
+                android:focusableInTouchMode="false"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="datetime" />
+
+            <TextView
+                android:id="@+id/customer_end_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/customer_using_end_time" />
+
+            <EditText
+                android:id="@+id/customer_end_time_et"
+                android:background="@xml/background_white_and_underline"
+                android:focusableInTouchMode="false"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="datetime" />
+        </LinearLayout>
+
+        <!-- 부모 정보 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_enterance_parent_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_margin="10dp"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/customer_parent_accompany_yn" />
+
+            <RadioGroup
+                android:id="@+id/customer_parent_accompany_yn_radio"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:checkedButton="@id/accompany_no"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/accompany_yes"
+                    android:text="@string/customer_parent_accompany_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RadioButton
+                    android:id="@+id/accompany_no"
+                    android:text="@string/customer_parent_accompany_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/customer_parent_tea" />
+
+            <Spinner
+                android:id="@+id/customer_parent_tea_spinner"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- 부모 주문 정보 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_parent_detail_view_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/customer_parent_detail_tv"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/customer_parent_tea" />
+        </LinearLayout>
+
+        <!-- 추가 구매 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_add_goods_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_margin="10dp"
+                android:background="@xml/background_f1f1f1_and_underline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/customer_add_goods" />
+
+            <Spinner
+                android:id="@+id/customer_add_goods_spinner"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- 추가 구매 상세 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_add_goods_detail_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/customer_add_goods" />
+
+        </LinearLayout>
+
+        <!-- 상세 메모 영역 -->
+        <LinearLayout
+            android:id="@+id/customer_add_memo_ll"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:background="@xml/background_white_and_underline"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/customer_add_memo" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
