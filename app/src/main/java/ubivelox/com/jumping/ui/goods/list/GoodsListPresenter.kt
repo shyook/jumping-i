@@ -14,7 +14,7 @@ class GoodsListPresenter : BasePresenter<IGoodsListContractView>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun loadData() {
+    fun loadData() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

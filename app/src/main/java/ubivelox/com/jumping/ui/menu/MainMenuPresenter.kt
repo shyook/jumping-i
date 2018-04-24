@@ -26,7 +26,7 @@ class MainMenuPresenter : BasePresenter<IMainMenuContractView>() {
         mView = null;
     }
 
-    override fun loadData() {
+    fun loadData() {
 
     }
 

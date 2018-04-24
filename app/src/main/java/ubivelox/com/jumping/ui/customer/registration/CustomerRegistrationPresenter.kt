@@ -51,7 +51,7 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
         }
     }
 
-    override fun loadData() {
+    fun loadData() {
 
     }
 
@@ -108,10 +108,6 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
             Toast.makeText(mActivity, mActivity.getText(R.string.photo_cancel), Toast.LENGTH_SHORT).show()
             return
         } else {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-//            }
             // crop
             intent.putExtra("aspectX", 1)
             intent.putExtra("aspectY", 1)
@@ -135,17 +131,13 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
             mImagePathUri = FileProvider.getUriForFile(mActivity,
                     mActivity.packageName, tempFile)
 
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-//            }
-
             intent.putExtra("return-data", false)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, mImagePathUri)
             intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
 
             val i = Intent(intent)
             val res = list[0]
+            // 안드로이드 N버전 이상부터 flag로 uri permission 전달 해야 함.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
@@ -208,10 +200,11 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
         values.put(DbHelper.COLUMNS_PARENT_TELEPHONE, data.parentPhoneNumber)
         values.put(DbHelper.COLUMNS_PHOTO, data.imagePath)
 
-        val result = DatabaseManager.getInstance(mActivity).insert(values)
+        val result = DatabaseManager.getInstance(mActivity).insert(values, DbHelper.CUSTOMER_TABLE)
 
         if (result > 0) {
             mView?.setToast(mActivity.getText(R.string.customer_save_ok).toString())
+            mView?.clearAllField()
         }
     }
 

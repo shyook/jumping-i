@@ -5,5 +5,10 @@ package ubivelox.com.jumping.ui.data
  *
  * Created by UBIVELOX on 2018-04-20.
  */
-data class GoodsData(var name: String, var imagePath: String, var inputPrice: Int, var outputPrice: Int, var memo: String) {
+class GoodsData : BaseData() {
+    var imagePath: String = ""
+    var inputPrice: Int = 0
+    var outputPrice: Int = 0
+    var goodsType: Int = -1
+    var memo: String = ""
 }

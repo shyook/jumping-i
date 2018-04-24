@@ -14,7 +14,7 @@ class GoodsRegistrationPresenter : BasePresenter<IGoodsRegistrationContractView>
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun loadData() {
+    fun loadData() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

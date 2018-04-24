@@ -45,6 +45,9 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
         const val COLUMNS_GOODS_PHOTO = "_goods_image" // 상품 이미지
         const val COLUMNS_GOODS_INPUT_PRICE = "_input_price" // 매입 단가
         const val COLUMNS_GOODS_OUTPUT_PRICE = "_output_price" // 판매 단가
+        const val COLUMNS_GOODS_TYPE = "_goods_type" // 상품 타입
+
+        const val UPDATE_SELECTION_ID = "ID=?"
 
     }
 
@@ -80,6 +83,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
             "${COLUMNS_GOODS_PHOTO} TEXT," +
             "${COLUMNS_GOODS_INPUT_PRICE} INTEGER," +
             "${COLUMNS_GOODS_OUTPUT_PRICE} INTEGER," +
+            "${COLUMNS_GOODS_TYPE} INTEGER," +
             "${COLUMNS_MEMO} TEXT" +
             ")"
 

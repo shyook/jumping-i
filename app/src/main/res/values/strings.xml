@@ -51,6 +51,14 @@
     <string name="permission_granted">권한 허가</string>
     <string name="permission_denied">권한 거부</string>
     <string name="photo_cancel">취소 되었습니다.</string>
-    <string name="customer_save_ok">고객 정보가 정상적으로 저장 되었습니다.</string>
+    <string name="customer_save_ok">정상적으로 저장 되었습니다.</string>
     <string name="input_name_please">이름을 입력해 주세요.</string>
+
+    <string name="dialog_title">알림</string>
+    <string name="dialog_yes">확인</string>
+    <string name="dialog_no">취소</string>
+    <string name="dialog_not_found_customer">고객을 찾을 수 없습니다.\n등록 하시겠습니까?</string>
+
+    <string name="customer_enterance">입장</string>
+    <string name="customer_enterance_add_items">업데이트</string>
 </resources>

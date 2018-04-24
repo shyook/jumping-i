@@ -6,5 +6,4 @@ package ubivelox.com.jumping.ui.base
 abstract class BasePresenter<T : IBaseView> {
     abstract fun attachView(view : T);
     abstract fun detachView();
-    abstract fun loadData();
 }

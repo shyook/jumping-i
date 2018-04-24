@@ -7,4 +7,5 @@ import ubivelox.com.jumping.ui.base.IBaseView
  */
 interface ICustomerRegistrationContractView : IBaseView {
     fun setToast(text: String?)
+    fun clearAllField() 
 }

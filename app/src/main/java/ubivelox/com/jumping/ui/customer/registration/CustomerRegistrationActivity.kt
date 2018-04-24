@@ -93,6 +93,13 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         mRegistration = findViewById(R.id.registration_bt) as Button
         mRegistration.setOnClickListener(mClickListener)
         mName = findViewById(R.id.registration_name_et) as EditText
+        val intent = intent
+        if (intent != null) {
+            val name = intent.getStringExtra(AppConsts.EXTRA_CUSTOMER_NAME)
+            if (!TextUtils.isEmpty(name)) {
+                mName.setText(name)
+            }
+        }
         mPhone = findViewById(R.id.registration_first_field_et) as EditText
         mParentsPhone = findViewById(R.id.registration_second_field_et) as EditText
         mMemo = findViewById(R.id.registration_add_memo_et) as EditText
@@ -105,6 +112,18 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
 
     override fun setToast(text: String?) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * 등록 필드의 모든 내용을 지운다.
+     */
+    override fun clearAllField() {
+        mPhoto.setImageURI(null)
+        mMemo.text = null
+        mParentsPhone.text = null
+        mPhone.text = null
+        mName.text = null
+
     }
 
     /*******************************************************************************
