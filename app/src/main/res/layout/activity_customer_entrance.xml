@@ -197,6 +197,7 @@
                     android:layout_marginRight="10dp"
                     android:checkedButton="@id/accompany_no"
                     android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
@@ -243,9 +244,9 @@
                 <TextView
                     android:id="@+id/customer_parent_detail_tv"
                     android:layout_margin="10dp"
+                    android:gravity="top"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/customer_parent_tea" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <!-- 추가 구매 영역 -->
@@ -260,6 +261,7 @@
                     android:background="@xml/background_f1f1f1_and_underline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/customer_add_goods" />
 
                 <Spinner
@@ -283,9 +285,9 @@
                 <TextView
                     android:id="@+id/customer_add_goods_detail_tv"
                     android:layout_margin="10dp"
+                    android:gravity="top"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/customer_add_goods" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

@@ -61,16 +61,10 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         }
 
         when(requestCode) {
-            AppConsts.PICK_FROM_CAMERA -> mPresenter?.cropImageForCamera()
-            AppConsts.PICK_FROM_GALLERY -> mPresenter?.cropImageForGallery(data)
+            AppConsts.PICK_FROM_CAMERA -> mPresenter?.cropImageForCamera(this)
+            AppConsts.PICK_FROM_GALLERY -> mPresenter?.cropImageForGallery(this, data)
             AppConsts.PICK_FROM_IMAGE -> saveImage(data)
         }
-    }
-    private fun saveImage(data: Intent?) {
-        Log.i("shyook", "saveImage() : " + data?.extras)
-        mPhoto.setImageURI(null)
-        mPhoto.setImageURI(data?.data)
-        mPhoto.tag = data?.data.toString()
     }
 
     /*******************************************************************************
@@ -104,6 +98,7 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         mParentsPhone = findViewById(R.id.registration_second_field_et) as EditText
         mMemo = findViewById(R.id.registration_add_memo_et) as EditText
         mPhoto = findViewById(R.id.items_image) as ImageView
+        mPhoto.tag = ""
     }
 
     override fun initData() {
@@ -119,6 +114,7 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
      */
     override fun clearAllField() {
         mPhoto.setImageURI(null)
+        mPhoto.tag = ""
         mMemo.text = null
         mParentsPhone.text = null
         mPhone.text = null
@@ -129,10 +125,17 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
     /*******************************************************************************
      * Inner Method.
      *******************************************************************************/
+    private fun saveImage(data: Intent?) {
+        Log.i("shyook", "saveImage() : " + data?.extras)
+        mPhoto.setImageURI(null)
+        mPhoto.setImageURI(data?.data)
+        mPhoto.tag = data?.data.toString()
+    }
+
     private var mClickListener = View.OnClickListener {
         when(it.id) {
-            R.id.take_photo_bt -> mPresenter?.doTakePhotoAction()
-            R.id.move_gallery_bt -> mPresenter?.getGalleryAction()
+            R.id.take_photo_bt -> mPresenter?.doTakePhotoAction(this)
+            R.id.move_gallery_bt -> mPresenter?.getGalleryAction(this)
             R.id.registration_bt -> getAllFiledData()
         }
     }

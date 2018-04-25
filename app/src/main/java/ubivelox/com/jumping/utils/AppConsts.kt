@@ -18,6 +18,8 @@ class AppConsts {
         const val MOVE_PAGE_REGISTRATION = 12
         const val MOVE_PAGE_ADDITION = 13
         const val MOVE_PAGE_SEARCH = 14
+        const val MOVE_PAGE_GOODS_LIST = 15
+        const val MOVE_PAGE_GOODS_REGISTRATION = 16
 
         const val PICK_FROM_CAMERA = 21
         const val PICK_FROM_GALLERY = 22

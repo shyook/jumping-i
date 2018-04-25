@@ -11,4 +11,5 @@ class GoodsData : BaseData() {
     var outputPrice: Int = 0
     var goodsType: Int = -1
     var memo: String = ""
+    var isSale: Boolean = true
 }

@@ -137,6 +137,32 @@
             app:layout_constraintStart_toEndOf="@+id/registration_second_field_tv"
             app:layout_constraintTop_toBottomOf="@+id/registration_first_field_et"/>
 
+        <TextView
+            android:id="@+id/registration_third_field_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/goods_type"
+            android:background="@xml/background_f1f1f1_and_underline"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/registration_third_field_spinner"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registration_second_field_tv" />
+
+        <Spinner
+            android:id="@+id/registration_third_field_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="3"
+            app:layout_constraintStart_toEndOf="@+id/registration_third_field_tv"
+            app:layout_constraintTop_toBottomOf="@+id/registration_second_field_et" />
+
         <!-- 메모 -->
         <TextView
             android:id="@+id/registration_add_memo_tv"
@@ -150,7 +176,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registration_second_field_tv"/>
+            app:layout_constraintTop_toBottomOf="@+id/registration_third_field_tv"/>
 
         <EditText
             android:id="@+id/registration_add_memo_et"
@@ -168,7 +194,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="3"
             app:layout_constraintStart_toEndOf="@+id/registration_add_memo_tv"
-            app:layout_constraintTop_toBottomOf="@+id/registration_second_field_et"/>
+            app:layout_constraintTop_toBottomOf="@+id/registration_third_field_spinner"/>
 
         <!-- 등록 버튼 -->
         <Button

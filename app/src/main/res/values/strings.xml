@@ -18,6 +18,7 @@
     <string name="parents_phone">부모 전화번호</string>
     <string name="input_price">매입가격</string>
     <string name="sales_price">판매가격</string>
+    <string name="sales_price_hint">1000</string>
     <string name="customer_using_play_time">이용시간</string>
 
     <string-array name="customer_using_time_items">
@@ -53,6 +54,8 @@
     <string name="photo_cancel">취소 되었습니다.</string>
     <string name="customer_save_ok">정상적으로 저장 되었습니다.</string>
     <string name="input_name_please">이름을 입력해 주세요.</string>
+    <string name="input_price_please">가격을 입력해 주세요.</string>
+    <string name="input_type_please">유형을 선택해 주세요.</string>
 
     <string name="dialog_title">알림</string>
     <string name="dialog_yes">확인</string>
@@ -61,4 +64,27 @@
 
     <string name="customer_enterance">입장</string>
     <string name="customer_enterance_add_items">업데이트</string>
+
+    <string name="goods_list">상품 목록</string>
+    <string name="goods_registration">상품 등록</string>
+
+    <string name="goods_type">상품 유형</string>
+    <string-array name="goods_type_items">
+        <item>@string/select</item>
+        <item>@string/goods_type_parent_price</item>
+        <item>@string/goods_type_drink</item>
+        <item>@string/goods_type_cookie</item>
+        <item>@string/goods_type_noodle</item>
+        <item>@string/goods_type_ice_cream</item>
+        <item>@string/goods_type_frozen_food</item>
+    </string-array>
+
+    <string name="goods_type_parent_price">부모 음료 혹은 입장권</string>
+    <string name="goods_type_drink">음료</string>
+    <string name="goods_type_cookie"> 과자</string>
+    <string name="goods_type_noodle">라면</string>
+    <string name="goods_type_ice_cream">아이스 크림</string>
+    <string name="goods_type_frozen_food">냉동 식품</string>
+
+    <string name="goods_name_price">%1$s:%2$s원,</string>
 </resources>

@@ -25,10 +25,12 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
     /*******************************************************************************
      * Variable.
      *******************************************************************************/
-    var mView : ICustomerEnteranceContractView? = null
-    lateinit var mActivity: Activity
-    var mCustomerList: ArrayList<CustomerData> = ArrayList()
-    var mGoodsList: ArrayList<GoodsData> = ArrayList()
+    private var mView : ICustomerEnteranceContractView? = null
+    private lateinit var mActivity: Activity
+    private var mCustomerList: ArrayList<CustomerData> = ArrayList() // 진입시 고객 데이터를 읽어와 저장
+    private var mGoodsList: ArrayList<GoodsData> = ArrayList() // 진입시 상품 데이터를 읽어와 저장
+
+    private var mAllSaleItems: ArrayList<Int> = ArrayList() // 아이 입장료 이외의 구매 물건의 ID 저장
 
     /*******************************************************************************
      * Interface Override.
@@ -46,6 +48,26 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
     /*******************************************************************************
      * public method.
      *******************************************************************************/
+    /**
+     * 저장된 상품 리스트를 반환 한다.
+     */
+    fun getGoodsList() : ArrayList<GoodsData> {
+        val list : ArrayList<GoodsData> = ArrayList()
+        list.addAll(mGoodsList)
+        return list
+    }
+
+    /**
+     * 저장된 상품 리스트중 특정 아이템을 반환 한다.
+     */
+    fun getGoodsItem(pos: Int) : GoodsData {
+        val data : GoodsData = mGoodsList.get(pos)
+        return data
+    }
+
+    fun setSaleItem(id: Int) {
+        mAllSaleItems.add(id)
+    }
 
     /**
      * DB 테이블에 저장된 모든 상품 항목을 읽어 온다.
@@ -56,8 +78,8 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
             val cursor = DatabaseManager.getInstance(mActivity).selectAll(DbHelper.CUSTOMER_TABLE)
 
             if (cursor.moveToFirst()) {
-                val data = CustomerData()
                 do {
+                    val data = CustomerData()
                     data.id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_ID))
                     data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
                     data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
@@ -75,18 +97,22 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
             val cursor = DatabaseManager.getInstance(mActivity).selectAll(DbHelper.GOODS_TABLE)
 
             if (cursor.moveToFirst()) {
-                val data = GoodsData()
                 do {
+                    val data = GoodsData()
                     data.id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_ID))
                     data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
                     data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
                     data.inputPrice = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_INPUT_PRICE))
                     data.outputPrice = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_OUTPUT_PRICE))
                     data.goodsType = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_TYPE))
-                    data.imagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PHOTO))
+                    data.imagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_PHOTO))
+                    data.isSale = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_PHOTO)))
                     data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
 
-                    mGoodsList.add(data)
+                    // 판매중인 데이터만 저장 한다.
+                    if (data.isSale) {
+                        mGoodsList.add(data)
+                    }
                 } while (cursor.moveToNext())
             }
         }
@@ -147,9 +173,9 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         values.put(DbHelper.COLUMNS_ENTERANCE_TIME, data.enteranceTime)
         values.put(DbHelper.COLUMNS_LEAVE_TIME, data.leaveTime)
         values.put(DbHelper.COLUMNS_PLAY_TIME, data.playTime)
-        values.put(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN, TextUtility.getStringToBoolean(data.parentAccompanyYN))
+        values.put(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN, TextUtility.getBooleanToString(data.parentAccompanyYN))
         values.put(DbHelper.COLUMNS_PARENT_TEA, data.parentTea)
-        values.put(DbHelper.COLUMNS_ADD_GOODS, data.addGoods)
+        values.put(DbHelper.COLUMNS_ADD_GOODS_ID, getIDToString(data.addGoodsID))
         values.put(DbHelper.COLUMNS_MEMO, data.memo)
 
         val db = DatabaseManager.getInstance(mActivity)
@@ -172,6 +198,18 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
     /*******************************************************************************
      * Inner method.
      *******************************************************************************/
+
+    private fun getIDToString(addGoodsID: ArrayList<Int>): String? {
+        val saveId = StringBuilder()
+        for(id in addGoodsID) {
+            saveId.append(id)
+            saveId.append(",")
+        }
+        Log.i("shyook", "Saved Data : " + saveId)
+        saveId.subSequence(0, saveId.lastIndex - 1)
+        Log.i("shyook", ", removed Data : " + saveId)
+        return saveId.toString()
+    }
 
 
 }

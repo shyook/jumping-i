@@ -42,7 +42,9 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
     lateinit var mInputName : EditText
     lateinit var mUsingTime : Spinner
     var mPresenter: CustomerEnterancePresenter? = null
-    var mParentsTeaItems : HashMap<String, Int> = HashMap()
+    var mParentsTeaItems : HashMap<Int, String> = HashMap()
+    var mGoodsItems : HashMap<Int, String> = HashMap()
+    var isPlaying : Boolean = false
 
     lateinit var mStartTime : EditText
     lateinit var mEndTime : EditText
@@ -120,8 +122,8 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         // 추가 구매로 들어온 경우 ID를 체크한다.
         val intent = intent
         if (intent != null) {
-            val isPlayTime = intent.getBooleanExtra(AppConsts.EXTRA_IS_PLAY_TIME, false)
-            if (isPlayTime) {
+            isPlaying = intent.getBooleanExtra(AppConsts.EXTRA_IS_PLAY_TIME, false)
+            if (isPlaying) {
                 // 버튼명 변경
                 mEnterance.setText(R.string.customer_enterance_add_items)
             }
@@ -142,8 +144,12 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
     }
 
     override fun displayCustomerData(oData: CustomerData) {
-        mCustomerPhoto.visibility = View.VISIBLE
-        mCustomerPhoto.setImageURI(Uri.parse(oData.imagePath))
+        // 이미지가 등록된 경우만 디스플레이
+        val imagePath = oData.imagePath
+        if (! TextUtils.isEmpty(imagePath)) {
+            mCustomerPhoto.visibility = View.VISIBLE
+            mCustomerPhoto.setImageURI(Uri.parse(imagePath))
+        }
 
         mInputName.setText(oData.name)
     }
@@ -184,29 +190,58 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
     override fun setGoodsList(goodsList: ArrayList<GoodsData>) {
         for (items in goodsList) {
             if (items.goodsType == AppConsts.GOODS_TYPE_PARENT_DRINK) {
-                mParentsTeaItems.apply { put(items.name, items.outputPrice) }
+                mParentsTeaItems.apply { put(items.id, items.name) }
+            }
+
+            mGoodsItems.apply {
+                put(items.id, items.name)
             }
         }
 
-        setParentsDrink(mParentsTeaItems.keys)
+        // 0번 항목에 선택을 삽입 한다.
+        mParentsTeaItems.put(0, getText(R.string.select).toString())
+        mGoodsItems.put(0, getText(R.string.select).toString())
 
+        setParentsDrink(mParentsTeaItems)
+        setAddGoods(mGoodsItems)
     }
 
     /*******************************************************************************
      * Inner method.
      *******************************************************************************/
+    private fun setAddGoods(map: HashMap<Int, String>) {
+        mAddGoods.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ArrayList<String>(map.values))
+        mAddGoods.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
 
-    private fun setParentsDrink(keys: MutableSet<String>) {
-        mParentDrink.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ArrayList<String>(keys))
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if (p2 > 0) {
+                    val selectedItem = p0?.getItemAtPosition(p2).toString()
+                    val data = mPresenter?.getGoodsItem(p2)!!
+                    Log.i("shyook", "selectedItem : " + selectedItem + "position : " + p2)
+                    mAddGoodsDetail.text = mAddGoodsDetail.text.toString() + getString(R.string.goods_name_price, map.get(p2), data.outputPrice)
+                    mPresenter?.setSaleItem(data.id)
+                }
+            }
+        }
+    }
+
+    private fun setParentsDrink(map: HashMap<Int, String>) {
+        mParentDrink.adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ArrayList<String>(map.values))
         mParentDrink.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val selectedItem = p0?.getItemAtPosition(p2).toString()
-                Log.i("shyook", "selectedItem : " + selectedItem + "position : " + p2)
+                if (p2 > 0) {
+                    val selectedItem = p0?.getItemAtPosition(p2).toString()
+                    val data = mPresenter?.getGoodsItem(p2)!!
+                    Log.i("shyook", "selectedItem : " + selectedItem + "position : " + p2)
+                    mParentOrderDetail.text = mParentOrderDetail.text.toString() + getString(R.string.goods_name_price, map.get(p2), data.outputPrice)
+                    mPresenter?.setSaleItem(data.id)
+                }
             }
-
         }
     }
 
@@ -234,10 +269,8 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
                         5 -> mEndTime.setText(TimeUtility.getCalculateEndTime(currentTime, TimeUtility.TIME_TO_MILLISECONT_4_HOUR))
                         else -> IllegalArgumentException("Using Time Select Error")
                     }
-
                 }
             }
-
         }
     }
 
@@ -255,7 +288,6 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         if (mCheckedParent.checkedRadioButtonId == R.id.accompany_yes) {
             data.parentAccompanyYN = true
         }
-
 
         // presenter에 데이터를 저장 요청 한다.
         mPresenter?.registEnteranceCustomer(data)

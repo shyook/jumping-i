@@ -5,8 +5,12 @@ package ubivelox.com.jumping.utils
  */
 class TextUtility {
     companion object {
-        fun getStringToBoolean(boolean: Boolean) : String {
+        fun getBooleanToString(boolean: Boolean) : String {
             return if(boolean) "Y" else "N"
+        }
+
+        fun getStringToBoolean(isYes: String) : Boolean {
+            return if("Y".equals(isYes)) true else false
         }
     }
 }
