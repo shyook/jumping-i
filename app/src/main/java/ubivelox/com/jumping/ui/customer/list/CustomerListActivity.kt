@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.customer.list
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import ubivelox.com.jumping.R
 import ubivelox.com.jumping.ui.base.BaseActivity
 
@@ -13,6 +14,8 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
      * Variable.
      *******************************************************************************/
     private var mPresenter : CustomerListPresenter? = null
+    private lateinit var mImageAdapter : ImageAdapter
+    private lateinit var mRecyclerView : RecyclerView
 
     /*******************************************************************************
      * Life Cycle.
@@ -20,6 +23,9 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_list)
+
+        init()
+        initData()
     }
 
     override fun onDestroy() {
@@ -37,7 +43,13 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
     }
 
     override fun init() {
+        mPresenter = CustomerListPresenter().apply {
+            attachView(this@CustomerListActivity)
+        }
 
+        mRecyclerView = findViewById(R.id.customer_list_recycler_view) as RecyclerView
+        mImageAdapter = ImageAdapter(this)
+        mRecyclerView.adapter = mImageAdapter
     }
 
     override fun initData() {
