@@ -8,5 +8,5 @@ import android.support.v7.app.AppCompatActivity
 
 public abstract class BaseActivity : AppCompatActivity(), IBaseView {
     protected abstract fun init();
-    protected abstract fun initData();
+    protected open fun initData() {}
 }

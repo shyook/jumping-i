@@ -32,6 +32,11 @@
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="portrait" />
 
+        <!-- 고객 목록 -->
+        <activity android:name=".ui.customer.list.CustomerListActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:screenOrientation="portrait" />
+
         <!-- 상품 등록 -->
         <activity android:name=".ui.goods.registration.GoodsRegistrationActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"

@@ -51,8 +51,8 @@ class CustomerFragment : Fragment {
             setOnClickListener(mClickButton)
         }
 
-        (view!!.findViewById(R.id.customer_addition) as Button).apply {
-            tag = AppConsts.MOVE_PAGE_ADDITION
+        (view!!.findViewById(R.id.customer_list) as Button).apply {
+            tag = AppConsts.MOVE_PAGE_LIST
             setOnClickListener(mClickButton)
         }
 
@@ -73,7 +73,7 @@ class CustomerFragment : Fragment {
         val tag = it.tag as Int
         when(it.id) {
             R.id.customer_enterance,
-            R.id.customer_addition,
+            R.id.customer_list,
             R.id.customer_registration,
             R.id.customer_search -> (activity as MainActivity).moveCustomerMenu(tag)
 

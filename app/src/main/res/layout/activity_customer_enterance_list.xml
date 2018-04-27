@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/prev_date_button"
+        android:text="@string/prev_date"
+        android:background="@drawable/co_line_btn_selector"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/date_display_textview"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/date_display_textview"
+        android:text="2018.04.16"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@id/prev_date_button"
+        app:layout_constraintEnd_toStartOf="@id/next_date_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/next_date_button"
+        android:text="@string/next_date"
+        android:background="@drawable/co_line_btn_selector"
+        app:layout_constraintStart_toEndOf="@id/date_display_textview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/customer_enterance_list_recycler_view"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/next_date_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.constraint.ConstraintLayout>

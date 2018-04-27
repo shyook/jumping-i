@@ -14,7 +14,7 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
      * Variable.
      *******************************************************************************/
     private var mPresenter : CustomerListPresenter? = null
-    private lateinit var mImageAdapter : ImageAdapter
+    private lateinit var mCustomerListAdapter : CustomerListAdapter
     private lateinit var mRecyclerView : RecyclerView
 
     /*******************************************************************************
@@ -43,16 +43,22 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
     }
 
     override fun init() {
+        mCustomerListAdapter = CustomerListAdapter(this)
         mPresenter = CustomerListPresenter().apply {
             attachView(this@CustomerListActivity)
+            setAdapter(mCustomerListAdapter, mCustomerListAdapter)
         }
 
         mRecyclerView = findViewById(R.id.customer_list_recycler_view) as RecyclerView
-        mImageAdapter = ImageAdapter(this)
-        mRecyclerView.adapter = mImageAdapter
+        mRecyclerView.adapter = mCustomerListAdapter
     }
 
     override fun initData() {
         mPresenter?.loadData()
     }
+
+    /*******************************************************************************
+     * Inner Method.
+     *******************************************************************************/
+
 }

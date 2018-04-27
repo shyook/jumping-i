@@ -20,8 +20,8 @@
             android:layout_height="100dp"/>
 
         <Button
-            android:id="@+id/customer_addition"
-            android:text="@string/customer_menu_button_addition"
+            android:id="@+id/customer_list"
+            android:text="@string/customer_menu_button_list"
             android:background="@drawable/co_line_btn_02_selector"
             android:layout_marginTop="20dp"
             android:layout_width="100dp"

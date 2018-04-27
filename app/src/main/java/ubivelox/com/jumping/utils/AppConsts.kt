@@ -16,7 +16,7 @@ class AppConsts {
 
         const val MOVE_PAGE_ENTERANCE = 11
         const val MOVE_PAGE_REGISTRATION = 12
-        const val MOVE_PAGE_ADDITION = 13
+        const val MOVE_PAGE_LIST = 13
         const val MOVE_PAGE_SEARCH = 14
         const val MOVE_PAGE_GOODS_LIST = 15
         const val MOVE_PAGE_GOODS_REGISTRATION = 16
@@ -34,6 +34,7 @@ class AppConsts {
 
         const val EXTRA_CUSTOMER_NAME = "EXTRA_CUSTOMER_NAME"
         const val EXTRA_IS_PLAY_TIME = "EXTRA_IS_PLAY_TIME"
+        const val EXTRA_CUSTOMER_ID =  "EXTRA_CUSTOMER_ID"
 
         // TODO enum 사용 방법을 아직 모름...
         enum class movePage(val position: Int) {

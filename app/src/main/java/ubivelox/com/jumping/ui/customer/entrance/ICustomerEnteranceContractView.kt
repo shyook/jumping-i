@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.customer.entrance
 
 import ubivelox.com.jumping.ui.base.IBaseView
 import ubivelox.com.jumping.ui.data.CustomerData
+import ubivelox.com.jumping.ui.data.CustomerEnteranceData
 import ubivelox.com.jumping.ui.data.GoodsData
 
 /**
@@ -13,4 +14,5 @@ interface ICustomerEnteranceContractView : IBaseView {
     fun setToast(toString: String)
     fun clearAllField()
     fun setGoodsList(goodsList: ArrayList<GoodsData>)
+    fun setCustomerData(data: CustomerEnteranceData)
 }

@@ -9,6 +9,7 @@
     <string name="customer_menu_button_registration">고객 등록</string>
     <string name="customer_menu_button_search">고객 조회</string>
     <string name="customer_menu_button_addition">추가 구매</string>
+    <string name="customer_menu_button_list">고객 목록</string>
     <string name="customer_search">조회</string>
     <string name="customer_search_hint">홍길동</string>
     <string name="name">이름</string>

@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import ubivelox.com.jumping.database.DbHelper.Companion.COLUMNS_ENTERANCE_TIME
+import ubivelox.com.jumping.database.DbHelper.Companion.COLUMNS_ID
+import ubivelox.com.jumping.utils.TimeUtility
 
 /**
  * Created by UBIVELOX on 2018-04-17.
@@ -53,9 +56,23 @@ class DatabaseManager private constructor(context : Context) {
     }
 
     /**
-     * Customer 테이블에 데이터 조회
+     * Customer 테이블에 전체 데이터 조회
      */
     fun selectAll(tableName: String): Cursor {
         return db!!.rawQuery("SELECT * FROM ${tableName}", null)
+    }
+
+    /**
+     * 테이블에서 ID에 해당한느 데이터를 조회한다.
+     */
+    fun select(tableName: String, id: Int): Cursor {
+        return db!!.rawQuery("SELECT * FROM ${tableName} WHERE ${COLUMNS_ID}='${id}'",null)
+    }
+
+    /**
+     * 테이블에서 원하는 날짜에 대한 데이터를 조회 한다.
+     */
+    fun selectDate(tableName: String, date: String): Cursor {
+        return db!!.rawQuery("SELECT * FROM ${tableName} WHERE ${COLUMNS_ENTERANCE_TIME}='${date}'",null)
     }
 }

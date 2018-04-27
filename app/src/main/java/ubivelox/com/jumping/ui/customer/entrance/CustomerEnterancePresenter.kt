@@ -10,6 +10,7 @@ import ubivelox.com.jumping.R
 import ubivelox.com.jumping.database.DatabaseManager
 import ubivelox.com.jumping.database.DbHelper
 import ubivelox.com.jumping.ui.base.BasePresenter
+import ubivelox.com.jumping.ui.common.IUtils
 import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivity
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.CustomerEnteranceData
@@ -21,7 +22,7 @@ import ubivelox.com.jumping.utils.TextUtility
 /**
  * Created by UBIVELOX on 2018-04-17.
  */
-class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>() {
+class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>(), IUtils {
     /*******************************************************************************
      * Variable.
      *******************************************************************************/
@@ -69,6 +70,10 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         mAllSaleItems.add(id)
     }
 
+    fun getSaleItem(): ArrayList<Int> {
+        return mAllSaleItems
+    }
+
     /**
      * DB 테이블에 저장된 모든 상품 항목을 읽어 온다.
      */
@@ -106,7 +111,7 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
                     data.outputPrice = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_OUTPUT_PRICE))
                     data.goodsType = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_TYPE))
                     data.imagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_PHOTO))
-                    data.isSale = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_PHOTO)))
+                    data.isSale = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_GOODS_ON_SALE_YN)))
                     data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
 
                     // 판매중인 데이터만 저장 한다.
@@ -175,7 +180,7 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         values.put(DbHelper.COLUMNS_PLAY_TIME, data.playTime)
         values.put(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN, TextUtility.getBooleanToString(data.parentAccompanyYN))
         values.put(DbHelper.COLUMNS_PARENT_TEA, data.parentTea)
-        values.put(DbHelper.COLUMNS_ADD_GOODS_ID, getIDToString(data.addGoodsID))
+        values.put(DbHelper.COLUMNS_ADD_GOODS_ID, data.addGoodsID.joinToString())
         values.put(DbHelper.COLUMNS_MEMO, data.memo)
 
         val db = DatabaseManager.getInstance(mActivity)
@@ -195,21 +200,30 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         }
     }
 
-    /*******************************************************************************
-     * Inner method.
-     *******************************************************************************/
+    /**
+     * 고객 입장 ID를 전달 받아 입장고객에 대한 정보를 읽어 온다.
+     */
+    fun loadCustomerEnteranceData(id: Int) {
+        val cursor = DatabaseManager.getInstance(mActivity).select(DbHelper.CUSTOMER_ENTERANCE_TABLE, id)
 
-    private fun getIDToString(addGoodsID: ArrayList<Int>): String? {
-        val saveId = StringBuilder()
-        for(id in addGoodsID) {
-            saveId.append(id)
-            saveId.append(",")
+        if (cursor.moveToFirst()) {
+            val data = CustomerEnteranceData()
+            data.id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_ID))
+            data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
+            data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
+            data.customerID = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_CUSTOMER_ID))
+            data.addGoodsID = getStringToID(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ADD_GOODS_ID)))
+            data.enteranceTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ENTERANCE_TIME))
+            data.leaveTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_LEAVE_TIME))
+            data.playTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PLAY_TIME))
+            data.parentTea = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_TEA))
+            data.parentAccompanyYN = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN)))
+            data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
+
+            // 데이터 획득에 성공 했으면 UI 셋팅을 위해 view 호출
+            mView?.clearAllField()
+            mView?.setCustomerData(data)
         }
-        Log.i("shyook", "Saved Data : " + saveId)
-        saveId.subSequence(0, saveId.lastIndex - 1)
-        Log.i("shyook", ", removed Data : " + saveId)
-        return saveId.toString()
     }
-
 
 }
