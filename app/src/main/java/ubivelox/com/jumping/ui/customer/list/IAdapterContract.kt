@@ -8,7 +8,7 @@ import ubivelox.com.jumping.ui.data.CustomerData
 interface IAdapterContract {
     interface View {
         // Higher order functions
-        // var onClickFunc : ((Int) -> Unit)?
+        var onClickFunc : ((Int) -> Unit)?
         fun notifyAdapter()
     }
 

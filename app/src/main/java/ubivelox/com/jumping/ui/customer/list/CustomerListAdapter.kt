@@ -13,11 +13,12 @@ class CustomerListAdapter (val context: Context) : RecyclerView.Adapter<Customer
      * Variable.
      *******************************************************************************/
     private lateinit var mCustomerList: ArrayList<CustomerData>
+    override var onClickFunc: ((Int) -> Unit)? = null
     /*******************************************************************************
      * ViewHolder Override.
      *******************************************************************************/
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CustomerListViewHolder {
-        return CustomerListViewHolder(context, parent)
+        return CustomerListViewHolder(context, parent, onClickFunc)
     }
 
     override fun getItemCount(): Int {

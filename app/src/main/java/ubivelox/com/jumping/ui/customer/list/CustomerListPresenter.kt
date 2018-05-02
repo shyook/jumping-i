@@ -1,13 +1,16 @@
 package ubivelox.com.jumping.ui.customer.list
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 import ubivelox.com.jumping.database.DatabaseManager
 import ubivelox.com.jumping.database.DbHelper
 import ubivelox.com.jumping.ui.base.BasePresenter
+import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivity
 import ubivelox.com.jumping.ui.data.CustomerData
+import ubivelox.com.jumping.utils.AppConsts
 
 /**
  * Created by UBIVELOX on 2018-04-25.
@@ -44,7 +47,11 @@ class CustomerListPresenter : BasePresenter<ICustomerListContractView>() {
     fun setAdapter(view: IAdapterContract.View, model: IAdapterContract.Model) {
         mAdapterModel = model
         mAdapterView = view
+        mAdapterView?.onClickFunc = {
+            onClickListener(it)
+        }
     }
+
     fun loadData() = runBlocking<Unit> {
         val jobs = launch {
             val cursor = DatabaseManager.getInstance(mActivity).selectAll(DbHelper.CUSTOMER_TABLE)
@@ -82,5 +89,22 @@ class CustomerListPresenter : BasePresenter<ICustomerListContractView>() {
         return list
     }
 
+    /**
+     * 고객 상세 페이지로 이동한다.
+     */
+    fun goCustomerDetail(id: Int) {
+        val intent = Intent(mActivity, CustomerRegistrationActivity::class.java)
+        intent.putExtra(AppConsts.EXTRA_CUSTOMER_ID, id)
+        mActivity?.startActivity(intent)
+    }
 
+    /*******************************************************************************
+     * Inner Method.
+     *******************************************************************************/
+    private fun onClickListener(it: Int) {
+        mAdapterModel.getItem(it).let {
+            // 상세 정보로 이동
+            mView?.askCustomerInfoModify(it.id)
+        }
+    }
 }

@@ -3,6 +3,7 @@ package ubivelox.com.jumping.ui.customer.registration
 import android.app.Activity
 import android.content.ContentValues
 import android.net.Uri
+import kotlinx.coroutines.experimental.launch
 import ubivelox.com.jumping.R
 import ubivelox.com.jumping.database.DatabaseManager
 import ubivelox.com.jumping.database.DbHelper
@@ -36,11 +37,6 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
         }
     }
 
-    fun loadData() {
-
-    }
-
-
     override fun getImagePathUri(): Uri? {
         return mImagePathUri
     }
@@ -71,6 +67,26 @@ class CustomerRegistrationPresenter : BasePresenter<ICustomerRegistrationContrac
             mView?.setToast(mActivity.getText(R.string.customer_save_ok).toString())
             setImagePathUri(null)
             mView?.clearAllField()
+        }
+    }
+
+
+    fun loadData(id: Int) {
+        val jobs = launch {
+            val cursor = DatabaseManager.getInstance(mActivity).select(DbHelper.CUSTOMER_TABLE, id)
+            val data = CustomerData()
+            if (cursor.moveToFirst()) {
+                data.id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_ID))
+                data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
+                data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
+                data.phoneNumber = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_TELEPHONE))
+                data.parentPhoneNumber = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_TELEPHONE))
+                data.imagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PHOTO))
+                data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
+
+                mView?.clearAllField()
+                mView?.setCustomerInfo(data)
+            }
         }
     }
 

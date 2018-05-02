@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.customer.registration
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -43,7 +44,6 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         setContentView(R.layout.activity_customer_registration)
 
         init()
-        initData()
     }
 
     override fun onDestroy() {
@@ -88,10 +88,17 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         mRegistration.setOnClickListener(mClickListener)
         mName = findViewById(R.id.registration_name_et) as EditText
         val intent = intent
+        var id = -1
         if (intent != null) {
             val name = intent.getStringExtra(AppConsts.EXTRA_CUSTOMER_NAME)
             if (!TextUtils.isEmpty(name)) {
                 mName.setText(name)
+            }
+
+            // id가 존재하면 리스트에서 상세로 수정을 위해 이동한 케이스임.
+            id = intent.getIntExtra(AppConsts.EXTRA_CUSTOMER_ID, -1)
+            if (id != -1) {
+                mRegistration.setText(R.string.modify)
             }
         }
         mPhone = findViewById(R.id.registration_first_field_et) as EditText
@@ -99,10 +106,14 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         mMemo = findViewById(R.id.registration_add_memo_et) as EditText
         mPhoto = findViewById(R.id.items_image) as ImageView
         mPhoto.tag = ""
+
+        if (id > 0) {
+            initData(id)
+        }
     }
 
-    override fun initData() {
-        mPresenter?.loadData()
+    fun initData(id: Int) {
+        mPresenter?.loadData(id)
     }
 
     override fun setToast(text: String?) {
@@ -120,6 +131,15 @@ class CustomerRegistrationActivity : BaseActivity(), ICustomerRegistrationContra
         mPhone.text = null
         mName.text = null
 
+    }
+
+    override fun setCustomerInfo(data: CustomerData) {
+        mPhoto.setImageURI(Uri.parse(data.imagePath))
+        mPhoto.tag = data.imagePath
+        mMemo.setText(data.memo)
+        mParentsPhone.setText(data.parentPhoneNumber)
+        mPhone.setText(data.phoneNumber)
+        mName.setText(data.name)
     }
 
     /*******************************************************************************

@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.customer.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -13,7 +14,7 @@ import ubivelox.com.jumping.utils.ImageAsync
 /**
  * Created by UBIVELOX on 2018-04-25.
  */
-class CustomerListViewHolder (val context: Context, parent: ViewGroup?)
+class CustomerListViewHolder (val context: Context, parent: ViewGroup?, val listenerFunc: ((Int) -> Unit)?)
     : RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_customer_list, parent, false)) {
     /*******************************************************************************
      * Variable.
@@ -35,8 +36,16 @@ class CustomerListViewHolder (val context: Context, parent: ViewGroup?)
      *******************************************************************************/
     fun onBind(item : CustomerData, position: Int) {
         ImageAsync(context, imageView).execute(item.imagePath)
-        name.text = item.name
-        detail.text = item.phoneNumber
-
+        name.text = context.getString(R.string.display_name, item.name)
+        if (! TextUtils.isEmpty(item.phoneNumber)) {
+            if (! TextUtils.isEmpty(item.parentPhoneNumber)) {
+                detail.text = context.getString(R.string.display_phone_with_parent, item.phoneNumber, item.parentPhoneNumber)
+            } else {
+                detail.text = context.getString(R.string.display_phone, item.phoneNumber)
+            }
+        }
+        itemView.setOnClickListener{
+            listenerFunc?.invoke(position)
+        }
     }
 }
