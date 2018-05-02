@@ -1,4 +1,4 @@
-package ubivelox.com.jumping.ui.customer.entrance.list
+package ubivelox.com.jumping.ui.customer.enterance.list
 
 import ubivelox.com.jumping.ui.base.IBaseView
 

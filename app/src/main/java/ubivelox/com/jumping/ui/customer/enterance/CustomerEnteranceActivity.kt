@@ -1,4 +1,4 @@
-package ubivelox.com.jumping.ui.customer.entrance
+package ubivelox.com.jumping.ui.customer.enterance
 
 import android.app.Activity
 import android.app.AlertDialog

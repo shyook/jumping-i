@@ -62,7 +62,7 @@ class CustomerFragment : Fragment {
         }
 
         (view!!.findViewById(R.id.customer_search) as Button).apply {
-            tag = AppConsts.MOVE_PAGE_SEARCH
+            tag = AppConsts.MOVE_PAGE_ENTERANCE_LIST
             setOnClickListener(mClickButton)
         }
 

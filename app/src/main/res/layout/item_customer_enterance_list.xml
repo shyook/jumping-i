@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="108dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/items_enterance_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/items_enterance_name"
+        app:layout_constraintTop_toTopOf="@id/items_enterance_name"
+        app:layout_constraintBottom_toBottomOf="@id/itmes_enterance_detail"
+        android:layout_marginStart="16dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+
+    <TextView
+        android:id="@+id/items_enterance_name"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/items_enterance_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/itmes_enterance_detail"
+        app:layout_constraintTop_toTopOf="@id/items_enterance_photo"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_weight="1"
+        android:text="@string/customer_search_hint"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/itmes_enterance_detail"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/items_enterance_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/items_enterance_name"
+        app:layout_constraintBottom_toTopOf="@id/itmes_enterance_total"
+        app:layout_constraintVertical_weight="1"
+        android:text="@string/display_no_phone_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/itmes_enterance_total"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/items_enterance_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itmes_enterance_detail"
+        app:layout_constraintBottom_toBottomOf="@id/items_enterance_photo"
+        app:layout_constraintVertical_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
+
+</android.support.constraint.ConstraintLayout>

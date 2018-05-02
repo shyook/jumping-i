@@ -8,6 +8,7 @@ import kotlinx.coroutines.experimental.runBlocking
 import ubivelox.com.jumping.database.DatabaseManager
 import ubivelox.com.jumping.database.DbHelper
 import ubivelox.com.jumping.ui.base.BasePresenter
+import ubivelox.com.jumping.ui.common.IAdapterContract
 import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivity
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.utils.AppConsts
@@ -24,7 +25,7 @@ class CustomerListPresenter : BasePresenter<ICustomerListContractView>() {
 
     private var mCustomerList: ArrayList<CustomerData> = ArrayList() // 전체 고객 리스트
 
-    private lateinit var mAdapterModel: IAdapterContract.Model // adapter에 이벤트를 바로 전달 하기 위한 인터페이스 변수
+    private lateinit var mAdapterModel: IAdapterContract.Model<CustomerData> // adapter에 이벤트를 바로 전달 하기 위한 인터페이스 변수
     private var mAdapterView: IAdapterContract.View? = null // adapter에 이벤트를 바로 전달 하기 위한 인터레이스 변수
 
     /*******************************************************************************
@@ -44,7 +45,7 @@ class CustomerListPresenter : BasePresenter<ICustomerListContractView>() {
     /*******************************************************************************
      * Public Method.
      *******************************************************************************/
-    fun setAdapter(view: IAdapterContract.View, model: IAdapterContract.Model) {
+    fun setAdapter(view: IAdapterContract.View, model: IAdapterContract.Model<CustomerData>) {
         mAdapterModel = model
         mAdapterView = view
         mAdapterView?.onClickFunc = {

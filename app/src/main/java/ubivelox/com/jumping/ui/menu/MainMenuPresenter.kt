@@ -2,7 +2,8 @@ package ubivelox.com.jumping.ui.menu
 
 import android.content.Intent
 import ubivelox.com.jumping.ui.base.BasePresenter
-import ubivelox.com.jumping.ui.customer.entrance.CustomerEnteranceActivity
+import ubivelox.com.jumping.ui.customer.enterance.CustomerEnteranceActivity
+import ubivelox.com.jumping.ui.customer.enterance.list.CustomerEnteranceListActivity
 import ubivelox.com.jumping.ui.customer.list.CustomerListActivity
 import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivity
 import ubivelox.com.jumping.ui.goods.list.GoodsListActivity
@@ -42,7 +43,7 @@ class MainMenuPresenter : BasePresenter<IMainMenuContractView>() {
             AppConsts.MOVE_PAGE_ENTERANCE -> intent = Intent(mView?.getActivity(), CustomerEnteranceActivity::class.java)
             AppConsts.MOVE_PAGE_REGISTRATION -> intent = Intent(mView?.getActivity(), CustomerRegistrationActivity::class.java)
             AppConsts.MOVE_PAGE_LIST -> intent = Intent(mView?.getActivity(), CustomerListActivity::class.java)
-            AppConsts.MOVE_PAGE_SEARCH -> intent = Intent(mView?.getActivity(), CustomerEnteranceActivity::class.java)
+            AppConsts.MOVE_PAGE_ENTERANCE_LIST -> intent = Intent(mView?.getActivity(), CustomerEnteranceListActivity::class.java)
             AppConsts.MOVE_PAGE_GOODS_LIST -> intent = Intent(mView?.getActivity(), GoodsListActivity::class.java)
             AppConsts.MOVE_PAGE_GOODS_REGISTRATION -> intent = Intent(mView?.getActivity(), GoodsRegistrationActivity::class.java)
 

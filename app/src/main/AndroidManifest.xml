@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <!-- 고객 입장 -->
-        <activity android:name=".ui.customer.entrance.CustomerEnteranceActivity"
+        <activity android:name=".ui.customer.enterance.CustomerEnteranceActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="portrait" />
 
@@ -34,6 +34,11 @@
 
         <!-- 고객 목록 -->
         <activity android:name=".ui.customer.list.CustomerListActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:screenOrientation="portrait" />
+
+        <!-- 입장 고객 목록 -->
+        <activity android:name=".ui.customer.enterance.list.CustomerEnteranceListActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="portrait" />
 

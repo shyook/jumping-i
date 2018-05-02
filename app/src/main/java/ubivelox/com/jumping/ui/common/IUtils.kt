@@ -1,5 +1,6 @@
 package ubivelox.com.jumping.ui.common
 
+import android.text.TextUtils
 import android.util.Log
 
 /**
@@ -33,10 +34,15 @@ interface IUtils {
      * String 형식의 ID를 List 형식으로 변환 후 반환
      */
     fun getStringToID(id: String) : ArrayList<Int> {
-        val result = id.split(",")
         val intList: ArrayList<Int> = ArrayList()
+        if (TextUtils.isEmpty(id)) {
+            return intList
+        }
+
+        val result = id.split(",")
         for(strID in result) {
-            intList.add(strID.toInt())
+            val trimID = strID.trim()
+            intList.add(trimID.toInt())
         }
         return intList
 

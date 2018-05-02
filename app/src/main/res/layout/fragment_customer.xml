@@ -44,7 +44,7 @@
 
         <Button
             android:id="@+id/customer_search"
-            android:text="@string/customer_menu_button_search"
+            android:text="@string/customer_menu_button_input_list"
             android:background="@drawable/co_line_btn_02_selector"
             android:layout_marginTop="20dp"
             android:layout_width="100dp"

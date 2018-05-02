@@ -17,7 +17,7 @@ class AppConsts {
         const val MOVE_PAGE_ENTERANCE = 11
         const val MOVE_PAGE_REGISTRATION = 12
         const val MOVE_PAGE_LIST = 13
-        const val MOVE_PAGE_SEARCH = 14
+        const val MOVE_PAGE_ENTERANCE_LIST = 14
         const val MOVE_PAGE_GOODS_LIST = 15
         const val MOVE_PAGE_GOODS_REGISTRATION = 16
 

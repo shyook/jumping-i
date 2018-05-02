@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import ubivelox.com.jumping.database.DbHelper.Companion.COLUMNS_DATE
 import ubivelox.com.jumping.database.DbHelper.Companion.COLUMNS_ENTERANCE_TIME
 import ubivelox.com.jumping.database.DbHelper.Companion.COLUMNS_ID
 import ubivelox.com.jumping.utils.TimeUtility
@@ -73,6 +74,6 @@ class DatabaseManager private constructor(context : Context) {
      * 테이블에서 원하는 날짜에 대한 데이터를 조회 한다.
      */
     fun selectDate(tableName: String, date: String): Cursor {
-        return db!!.rawQuery("SELECT * FROM ${tableName} WHERE ${COLUMNS_ENTERANCE_TIME}='${date}'",null)
+        return db!!.rawQuery("SELECT * FROM ${tableName} WHERE ${COLUMNS_DATE}='${date}'",null)
     }
 }

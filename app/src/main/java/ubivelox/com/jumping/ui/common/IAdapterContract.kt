@@ -1,6 +1,4 @@
-package ubivelox.com.jumping.ui.customer.list
-
-import ubivelox.com.jumping.ui.data.CustomerData
+package ubivelox.com.jumping.ui.common
 
 /**
  * Created by UBIVELOX on 2018-04-27.
@@ -12,11 +10,11 @@ interface IAdapterContract {
         fun notifyAdapter()
     }
 
-    interface Model {
-        fun addItems(items: ArrayList<CustomerData>)
+    interface Model<T> {
+        fun addItems(items: ArrayList<T>)
 
         fun clearItem()
 
-        fun getItem(position: Int) : CustomerData
+        fun getItem(position: Int) : T
     }
 }

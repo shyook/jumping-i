@@ -1,33 +1,35 @@
-package ubivelox.com.jumping.ui.customer.list
+package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import ubivelox.com.jumping.ui.common.IAdapterContract
+import ubivelox.com.jumping.ui.customer.list.CustomerListViewHolder
 import ubivelox.com.jumping.ui.data.CustomerData
+import ubivelox.com.jumping.ui.data.CustomerEnteranceData
 
 /**
- * Created by UBIVELOX on 2018-04-25.
+ * Created by UBIVELOX on 2018-05-02.
  */
-class CustomerListAdapter (val context: Context) : RecyclerView.Adapter<CustomerListViewHolder>(), IAdapterContract.View, IAdapterContract.Model<CustomerData> {
+class CustomerEnteranceListAdapter(val context: Context) : RecyclerView.Adapter<CustomerEnteranceListViewHolder>(), IAdapterContract.View, IAdapterContract.Model<CustomerEnteranceData> {
     /*******************************************************************************
      * Variable.
      *******************************************************************************/
-    private lateinit var mCustomerList: ArrayList<CustomerData>
+    private lateinit var mEnteranceList: ArrayList<CustomerEnteranceData>
     override var onClickFunc: ((Int) -> Unit)? = null
     /*******************************************************************************
      * ViewHolder Override.
      *******************************************************************************/
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CustomerListViewHolder {
-        return CustomerListViewHolder(context, parent, onClickFunc)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CustomerEnteranceListViewHolder {
+        return CustomerEnteranceListViewHolder(context, parent, onClickFunc)
     }
 
     override fun getItemCount(): Int {
-        return mCustomerList.size
+        return mEnteranceList.size
     }
 
-    override fun onBindViewHolder(holder: CustomerListViewHolder?, position: Int) {
-        mCustomerList[position].let {
+    override fun onBindViewHolder(holder: CustomerEnteranceListViewHolder?, position: Int) {
+        mEnteranceList[position].let {
             holder?.onBind(it, position)
         }
     }
@@ -39,13 +41,13 @@ class CustomerListAdapter (val context: Context) : RecyclerView.Adapter<Customer
         notifyDataSetChanged()
     }
 
-    override fun addItems(items: ArrayList<CustomerData>) {
-        mCustomerList = items
+    override fun addItems(items: ArrayList<CustomerEnteranceData>) {
+        mEnteranceList = items
     }
 
     override fun clearItem() {
-        mCustomerList.clear()
+        mEnteranceList.clear()
     }
 
-    override fun getItem(position: Int): CustomerData = mCustomerList.get(position)
+    override fun getItem(position: Int): CustomerEnteranceData = mEnteranceList.get(position)
 }

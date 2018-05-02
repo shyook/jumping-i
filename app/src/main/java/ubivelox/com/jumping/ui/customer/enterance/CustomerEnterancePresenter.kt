@@ -1,4 +1,4 @@
-package ubivelox.com.jumping.ui.customer.entrance
+package ubivelox.com.jumping.ui.customer.enterance
 
 import android.app.Activity
 import android.content.ContentValues
@@ -15,7 +15,6 @@ import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivit
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.CustomerEnteranceData
 import ubivelox.com.jumping.ui.data.GoodsData
-import ubivelox.com.jumping.ui.goods.registration.GoodsRegistrationActivity
 import ubivelox.com.jumping.utils.AppConsts
 import ubivelox.com.jumping.utils.TextUtility
 

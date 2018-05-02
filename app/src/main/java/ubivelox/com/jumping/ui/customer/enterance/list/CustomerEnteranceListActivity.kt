@@ -1,7 +1,9 @@
-package ubivelox.com.jumping.ui.customer.entrance.list
+package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Button
@@ -19,7 +21,7 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
      * Variable.
      *******************************************************************************/
     private var mPresenter : CustomerEnteranceListPresenter? = null
-    private lateinit var mCustomerListAdapter : CustomerListAdapter
+    private lateinit var mEnteranceListAdapter : CustomerEnteranceListAdapter
     private lateinit var mRecyclerView : RecyclerView
     private lateinit var mPrevButton : Button
     private lateinit var mNextButton: Button
@@ -53,13 +55,14 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
     }
 
     override fun init() {
+        mEnteranceListAdapter = CustomerEnteranceListAdapter(this)
         mPresenter = CustomerEnteranceListPresenter().apply {
             attachView(this@CustomerEnteranceListActivity)
+            setAdapter(mEnteranceListAdapter, mEnteranceListAdapter)
         }
 
         mRecyclerView = findViewById(R.id.customer_enterance_list_recycler_view) as RecyclerView
-        mCustomerListAdapter = CustomerListAdapter(this)
-        mRecyclerView.adapter = mCustomerListAdapter
+        mRecyclerView.adapter = mEnteranceListAdapter
 
         mPrevButton = findViewById(R.id.prev_date_button) as Button
         mPrevButton.setOnClickListener(mClickListener)
@@ -72,6 +75,9 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
             setText(mSelectedDate)
             setOnClickListener(mClickListener)
         }
+
+        val divDecoration = DividerItemDecoration(this, LinearLayoutManager(this).orientation)
+        mRecyclerView.addItemDecoration(divDecoration)
     }
 
     fun initData(date: String) {
