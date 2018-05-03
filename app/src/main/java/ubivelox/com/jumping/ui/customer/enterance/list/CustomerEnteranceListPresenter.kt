@@ -1,6 +1,7 @@
 package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.util.Log
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -12,6 +13,9 @@ import ubivelox.com.jumping.ui.common.IAdapterContract
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.CustomerEnteranceData
 import ubivelox.com.jumping.utils.TextUtility
+import ubivelox.com.jumping.utils.TimeUtility
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by UBIVELOX on 2018-04-27.
@@ -84,6 +88,22 @@ class CustomerEnteranceListPresenter : BasePresenter<ICustomerEnteranceListContr
         Log.i("shyook", "Call Data Setting")
         mAdapterModel.addItems(mEnteranceList)
         mAdapterView?.notifyAdapter()
+    }
+
+    fun getDate() {
+        val cal = Calendar.getInstance()
+        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            Log.i("shyook", "New Date : " + SimpleDateFormat(TimeUtility.DATE_FORMAT_YYYYMMDD).format(cal.time))
+            mView?.setNewDate(SimpleDateFormat(TimeUtility.DATE_FORMAT_YYYYMMDD).format(cal.time))
+        }
+
+        DatePickerDialog(mActivity, dateSetListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
+
+        Log.i("shyook", "Enter Date : " + SimpleDateFormat("yyyyMMdd").format(cal.time))
     }
 
     /*******************************************************************************

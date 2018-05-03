@@ -1,6 +1,7 @@
 package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -80,6 +81,12 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
         mRecyclerView.addItemDecoration(divDecoration)
     }
 
+    override fun setNewDate(format: String) {
+        mDateTextView.text = format
+        mSelectedDate = format
+        initData(mSelectedDate)
+    }
+
     fun initData(date: String) {
         mPresenter?.loadData(date)
     }
@@ -98,6 +105,9 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
                 mSelectedDate = TimeUtility.getNextOrPrevDate(mSelectedDate, false)
                 mDateTextView.setText(mSelectedDate)
                 mPresenter?.loadData(mSelectedDate)
+            }
+            R.id.date_display_textview -> {
+                mPresenter?.getDate()
             }
         }
     }

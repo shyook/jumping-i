@@ -8,6 +8,7 @@
         android:id="@+id/prev_date_button"
         android:text="@string/prev_date"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/co_line_btn_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/date_display_textview"
@@ -20,6 +21,7 @@
     <TextView
         android:id="@+id/date_display_textview"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="2018.04.16"
         android:gravity="center"
         app:layout_constraintStart_toEndOf="@id/prev_date_button"
@@ -34,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/co_line_btn_selector"
         android:text="@string/next_date"
         app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
@@ -45,7 +48,6 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/customer_enterance_list_recycler_view"
         app:layoutManager="LinearLayoutManager"
-        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/next_date_button"
