@@ -34,6 +34,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
 
         // Enterance Table
         const val COLUMNS_CUSTOMER_ID = "_customer_id" // 고객 테이블 id
+        const val COLUMNS_CUSTOMER_PHOTO = "_customer_photo" // 고객 사진
         const val COLUMNS_ENTERANCE_TIME = "_enterance_time" // 입장시간
         const val COLUMNS_LEAVE_TIME = "_leave_time" // 퇴장시간
         const val COLUMNS_PLAY_TIME = "_play_time" // 몇시간 인지
@@ -41,6 +42,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
         const val COLUMNS_PARENT_TEA = "_parent_tea" // 부모님 티 혹은 입장료
         // const val COLUMNS_ADD_GOODS = "_add_goods" // 추가 구매 물건
         const val COLUMNS_ADD_GOODS_ID = "_add_goods_id" // 추가 판매 상품 id
+        const val COLUMNS_TOTAL_PAYMENTS = "_total_payments" // 총 지불 금액
 
         // 상품 Table
         const val COLUMNS_GOODS_PHOTO = "_goods_image" // 상품 이미지
@@ -69,12 +71,14 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
             "${COLUMNS_NAME} TEXT," +
             "${COLUMNS_DATE} TEXT," +
             "${COLUMNS_CUSTOMER_ID} INTEGER," +
+            "${COLUMNS_CUSTOMER_PHOTO} TEXT," +
             "${COLUMNS_ADD_GOODS_ID} TEXT," +
             "${COLUMNS_ENTERANCE_TIME} TEXT," +
             "${COLUMNS_LEAVE_TIME} TEXT," +
             "${COLUMNS_PLAY_TIME} TEXT," +
             "${COLUMNS_PARENT_ACCOMPANY_YN} TEXT," +
             "${COLUMNS_PARENT_TEA} TEXT," +
+            "${COLUMNS_TOTAL_PAYMENTS} INTEGER," +
             // "${COLUMNS_ADD_GOODS} TEXT," +
             "${COLUMNS_MEMO} TEXT" +
             ")"

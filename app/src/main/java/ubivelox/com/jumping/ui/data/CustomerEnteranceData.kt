@@ -13,4 +13,6 @@ class CustomerEnteranceData : BaseData() {
     // var addGoods : ArrayList<String> = ArrayList() // 추가 구매 항목
     var addGoodsID: ArrayList<Int> = ArrayList() // 추가 구매 항목 ID
     var memo : String = ""
+    var customerImagePath : String = ""
+    var totalPayments: Int = 0
 }

@@ -4,8 +4,6 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import ubivelox.com.jumping.ui.common.IAdapterContract
-import ubivelox.com.jumping.ui.customer.list.CustomerListViewHolder
-import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.CustomerEnteranceData
 
 /**

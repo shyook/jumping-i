@@ -103,6 +103,7 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (TextUtils.isEmpty(p0)) {
                     mCustomerPhoto.setImageURI(null)
+                    mCustomerPhoto.tag = ""
                     mInputName.text = null
                 }
             }
@@ -114,7 +115,10 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         mEndTime = findViewById(R.id.customer_end_time_et) as EditText
 
         // 부모 주문 영역
-        mCheckedParent = findViewById(R.id.customer_parent_accompany_yn_radio) as RadioGroup
+        mCheckedParent = (findViewById(R.id.customer_parent_accompany_yn_radio) as RadioGroup).apply {
+            setOnCheckedChangeListener { radioGroup, i -> if(i == R.id.accompany_yes) mParentDrink.isEnabled = true else mParentDrink.isEnabled = false
+            }
+        }
         mParentDrink = findViewById(R.id.customer_parent_tea_spinner) as Spinner
         mParentOrderDetail = findViewById(R.id.customer_parent_detail_tv) as TextView
 
@@ -135,6 +139,10 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         mAddGoodsDetail = findViewById(R.id.customer_add_goods_detail_tv) as TextView
 
         mMemo = findViewById(R.id.customer_add_memo_et) as EditText
+
+        if (mCheckedParent.checkedRadioButtonId == R.id.accompany_no) {
+            mParentDrink.isEnabled = false
+        }
     }
 
     override fun initData() {
@@ -156,6 +164,7 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         if (! TextUtils.isEmpty(imagePath)) {
             mCustomerPhoto.visibility = View.VISIBLE
             mCustomerPhoto.setImageURI(Uri.parse(imagePath))
+            mCustomerPhoto.tag = imagePath
         }
 
         mInputName.setText(oData.name)
@@ -193,6 +202,8 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         mAddGoods.setSelection(0)
         mAddGoodsDetail.text = null
         mMemo.text = null
+        mCustomerPhoto.setImageURI(null)
+        mCustomerPhoto.tag = ""
 
     }
 
@@ -380,6 +391,9 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         }
         data.addGoodsID = mPresenter?.getSaleItem()!!
         data.memo = mMemo.text.toString()
+        if (mCustomerPhoto.tag != null) {
+            data.customerImagePath = mCustomerPhoto.tag.toString()
+        }
 
         // presenter에 데이터를 저장 요청 한다.
         mPresenter?.registEnteranceCustomer(data)

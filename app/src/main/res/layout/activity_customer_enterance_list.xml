@@ -31,24 +31,27 @@
 
     <Button
         android:id="@+id/next_date_button"
-        android:layout_marginTop="8dp"
-        android:text="@string/next_date"
-        android:background="@drawable/co_line_btn_selector"
-        app:layout_constraintStart_toEndOf="@id/date_display_textview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/co_line_btn_selector"
+        android:text="@string/next_date"
+        app:layout_constraintBottom_toTopOf="@id/customer_enterance_list_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/date_display_textview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/customer_enterance_list_recycler_view"
         app:layoutManager="LinearLayoutManager"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/next_date_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
     </android.support.v7.widget.RecyclerView>
 

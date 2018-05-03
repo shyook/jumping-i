@@ -94,4 +94,6 @@
     <string name="display_phone">전화번호 : %s</string>
     <string name="display_phone_with_parent">전화번호 : %1$s\n부모님 전화번호 : %2$s</string>
     <string name="is_modify_customer_info">고객 정보를 수정 하시겠습니까?</string>
+    <string name="play_time">놀이시간 : %1$s ~ %2$s</string>
+    <string name="total_payment">금액 : %d원</string>
 </resources>

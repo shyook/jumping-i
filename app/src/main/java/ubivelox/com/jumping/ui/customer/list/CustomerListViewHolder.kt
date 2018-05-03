@@ -35,7 +35,9 @@ class CustomerListViewHolder (val context: Context, parent: ViewGroup?, val list
      * Method.
      *******************************************************************************/
     fun onBind(item : CustomerData, position: Int) {
-        ImageAsync(context, imageView).execute(item.imagePath)
+        if (! TextUtils.isEmpty(item.imagePath)) {
+            ImageAsync(context, imageView).execute(item.imagePath)
+        }
         name.text = context.getString(R.string.display_name, item.name)
         if (! TextUtils.isEmpty(item.phoneNumber)) {
             if (! TextUtils.isEmpty(item.parentPhoneNumber)) {

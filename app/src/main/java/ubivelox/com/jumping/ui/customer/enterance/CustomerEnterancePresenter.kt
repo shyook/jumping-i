@@ -180,6 +180,8 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         values.put(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN, TextUtility.getBooleanToString(data.parentAccompanyYN))
         values.put(DbHelper.COLUMNS_PARENT_TEA, data.parentTea)
         values.put(DbHelper.COLUMNS_ADD_GOODS_ID, data.addGoodsID.joinToString())
+        values.put(DbHelper.COLUMNS_CUSTOMER_PHOTO, data.customerImagePath)
+        values.put(DbHelper.COLUMNS_TOTAL_PAYMENTS, calTotalPayments(data.playTime, data.addGoodsID))
         values.put(DbHelper.COLUMNS_MEMO, data.memo)
 
         val db = DatabaseManager.getInstance(mActivity)
@@ -211,17 +213,50 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
             data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
             data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
             data.customerID = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_CUSTOMER_ID))
+            data.customerImagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_CUSTOMER_PHOTO))
             data.addGoodsID = getStringToID(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ADD_GOODS_ID)))
             data.enteranceTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ENTERANCE_TIME))
             data.leaveTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_LEAVE_TIME))
             data.playTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PLAY_TIME))
             data.parentTea = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_TEA))
             data.parentAccompanyYN = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_ACCOMPANY_YN)))
+            data.totalPayments = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_TOTAL_PAYMENTS))
             data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
 
             // 데이터 획득에 성공 했으면 UI 셋팅을 위해 view 호출
             mView?.clearAllField()
             mView?.setCustomerData(data)
+        }
+    }
+
+    /*******************************************************************************
+     * Inner method.
+     *******************************************************************************/
+    private fun calTotalPayments(time: String, goods: ArrayList<Int>) : Int {
+        var totalPrice = getTimeToPrice(time)
+
+        totalPrice = totalPrice + getGoodsToPrice(goods)
+
+        return totalPrice
+    }
+
+    private fun getGoodsToPrice(goods: ArrayList<Int>): Int {
+        var price = 0
+        for (item in goods) {
+            Log.i("shyook", mGoodsList.get(item - 1).name)
+            price = price + mGoodsList.get(item - 1).outputPrice
+        }
+        return price
+    }
+
+    private fun getTimeToPrice(time: String) : Int {
+        when(time) {
+            mActivity.getString(R.string.customer_using_play_30_minute) -> return AppConsts.TIME_TO_PRICE.getValue(R.string.customer_using_play_30_minute)
+            mActivity.getString(R.string.customer_using_play_one_hour) -> return AppConsts.TIME_TO_PRICE.getValue(R.string.customer_using_play_one_hour)
+            mActivity.getString(R.string.customer_using_play_two_hour) -> return AppConsts.TIME_TO_PRICE.getValue(R.string.customer_using_play_two_hour)
+            mActivity.getString(R.string.customer_using_play_three_hour) -> return AppConsts.TIME_TO_PRICE.getValue(R.string.customer_using_play_three_hour)
+            mActivity.getString(R.string.customer_using_play_four_hour) -> return AppConsts.TIME_TO_PRICE.getValue(R.string.customer_using_play_four_hour)
+            else -> return 0
         }
     }
 

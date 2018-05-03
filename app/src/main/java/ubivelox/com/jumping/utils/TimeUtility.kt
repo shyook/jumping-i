@@ -12,6 +12,7 @@ class TimeUtility {
         const val DATE_FORMAT_YYYYMMDDHHMM = "yyyy-MM-dd HH:mm"
         const val DATE_FORMAT_YYYYMMDD = "yyyy-MM-dd"
         const val DATE_FORMAT_YYYYMMDDHHMMSS = "yyyyMMddkkmmss"
+        const val DATE_FORMAT_HHMM = "HH:mm"
 
         const val TIME_TO_MILLISECONT_30_MINUTE = 1000*60*30
         const val TIME_TO_MILLISECONT_1_HOUR = 1000*60*60
@@ -56,6 +57,18 @@ class TimeUtility {
             return convertDate.time
         }
 
+        /**
+         * milliseconds를 입력 받아 시간:분 형태로 반환 한다.
+         */
+        fun getMillisecondsToTimeDate(milliseconds: Long) : String {
+            val df = SimpleDateFormat(DATE_FORMAT_HHMM, Locale.KOREA)
+
+            return df.format(milliseconds)
+        }
+
+        /**
+         * 이전 다음날을 반환 한다.
+         */
         fun getNextOrPrevDate(date: String, isNext: Boolean) : String {
             val sdf = SimpleDateFormat(DATE_FORMAT_YYYYMMDD)
             val currentCalendar = Calendar.getInstance()

@@ -1,5 +1,7 @@
 package ubivelox.com.jumping.utils
 
+import ubivelox.com.jumping.R
+
 /**
  * Created by UBIVELOX on 2018-04-16.
  */
@@ -35,6 +37,14 @@ class AppConsts {
         const val EXTRA_CUSTOMER_NAME = "EXTRA_CUSTOMER_NAME"
         const val EXTRA_IS_PLAY_TIME = "EXTRA_IS_PLAY_TIME"
         const val EXTRA_CUSTOMER_ID =  "EXTRA_CUSTOMER_ID"
+
+        val TIME_TO_PRICE = hashMapOf(
+                R.string.customer_using_play_30_minute to 1500
+                , R.string.customer_using_play_one_hour to 3000
+                , R.string.customer_using_play_two_hour to 5000
+                , R.string.customer_using_play_three_hour to 7000
+                , R.string.customer_using_play_four_hour to 9000
+        )
 
         // TODO enum 사용 방법을 아직 모름...
         enum class movePage(val position: Int) {

@@ -51,6 +51,7 @@ class CustomerEnteranceListPresenter : BasePresenter<ICustomerEnteranceListContr
 
     /**
      * 고객 입장 ID를 전달 받아 입장고객에 대한 정보를 읽어 온다.
+     * 10개씩 로드할지에 대해 결정해야 함.
      */
     fun loadData(date: String) = runBlocking<Unit> {
         val jobs = launch {
@@ -70,32 +71,10 @@ class CustomerEnteranceListPresenter : BasePresenter<ICustomerEnteranceListContr
                     data.parentAccompanyYN = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PLAY_TIME)))
                     data.parentTea = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_TEA))
                     data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
+                    data.totalPayments = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_TOTAL_PAYMENTS))
+                    data.customerImagePath = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_CUSTOMER_PHOTO))
 
                     mEnteranceList.add(data)
-                } while (cursor.moveToNext())
-            }
-        }
-
-        val jobs1 = launch {
-            val cursor = DatabaseManager.getInstance(mActivity).selectAll(DbHelper.CUSTOMER_ENTERANCE_TABLE)
-            val list = ArrayList<CustomerEnteranceData>()
-
-            if (cursor.moveToFirst()) {
-                do {
-                    val data = CustomerEnteranceData()
-                    data.id = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_ID))
-                    data.name = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_NAME))
-                    data.date = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_DATE))
-                    data.customerID = cursor.getInt(cursor.getColumnIndex(DbHelper.COLUMNS_CUSTOMER_ID))
-                    data.addGoodsID = getStringToID(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ADD_GOODS_ID)))
-                    data.enteranceTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_ENTERANCE_TIME))
-                    data.leaveTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_LEAVE_TIME))
-                    data.playTime = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PLAY_TIME))
-                    data.parentAccompanyYN = TextUtility.getStringToBoolean(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PLAY_TIME)))
-                    data.parentTea = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_PARENT_TEA))
-                    data.memo = cursor.getString(cursor.getColumnIndex(DbHelper.COLUMNS_MEMO))
-
-                    list.add(data)
                 } while (cursor.moveToNext())
             }
         }
