@@ -189,7 +189,7 @@ class CustomerEnterancePresenter : BasePresenter<ICustomerEnteranceContractView>
         if (data.id > 0) {
             // 추가 입력 (DB Update)
             val selectionArs = arrayOf(data.id.toString())
-            result = db.update(values, DbHelper.UPDATE_SELECTION_ID, selectionArs, DbHelper.CUSTOMER_ENTERANCE_TABLE).toLong()
+            result = db.update(values, DbHelper.SELECTION_ID, selectionArs, DbHelper.CUSTOMER_ENTERANCE_TABLE).toLong()
         } else {
             // 입장 (DB Insert)
             result = db.insert(values, DbHelper.CUSTOMER_ENTERANCE_TABLE)

@@ -51,6 +51,9 @@ class GoodsRegistrationPresenter : BasePresenter<IGoodsRegistrationContractView>
     /*******************************************************************************
      * public method.
      *******************************************************************************/
+    /**
+     * 해당 ID에 대한 물건 정보를 얻어 온다
+     */
     fun loadData(id: Int) {
         val data = GoodsData()
         val jobs = launch {
@@ -75,6 +78,9 @@ class GoodsRegistrationPresenter : BasePresenter<IGoodsRegistrationContractView>
         // jobs.join()
     }
 
+    /**
+     * 상품을 등록 한다.
+     */
     fun registGoodsItem(data: GoodsData) {
         // DB에 저장 한다.
         val values = ContentValues()
@@ -97,15 +103,48 @@ class GoodsRegistrationPresenter : BasePresenter<IGoodsRegistrationContractView>
         }
     }
 
+    /**
+     * 수정 혹은 삭제 할 ID를 반환 한다.
+     */
     fun getLoadGoodsID() : Int {
         return mLoadID
     }
 
-    fun doDeleteAction(loadGoodsID: Int) {
-        
+    /**
+     * 물건을 삭제 처리 한다.
+     */
+    fun doDeleteAction(loadGoodsID: Int) : Int {
+        var result = -1
+        // 상품 ID 체크
+        if (loadGoodsID < 1) {
+            return result
+        }
+
+        // 상품 삭제
+        val selectionArs = arrayOf(loadGoodsID.toString())
+        result= DatabaseManager.getInstance(mActivity).delete(DbHelper.SELECTION_ID, selectionArs , DbHelper.GOODS_TABLE)
+
+        // UI갱신
+        mView?.clearAllField()
+        return result
     }
 
-    fun doChangeSaleAction(tag: Boolean) {
+    /**
+     * 판매중인 상품을 판매 중지로, 판매 중지 상태의 상품을 판매중으로 변경 한다.
+     */
+    fun doChangeSaleAction(tag: String) {
+        // DB Update
+        val values = ContentValues()
+        values.put(DbHelper.COLUMNS_GOODS_ON_SALE_YN, tag)
 
+        val selectionArs = arrayOf(getLoadGoodsID().toString())
+        var result = DatabaseManager.getInstance(mActivity).update(values, DbHelper.SELECTION_ID, selectionArs, DbHelper.GOODS_TABLE)
+
+        // UI 갱신 (판매중인 경우 수정 가능하게, 판매중지인 경우 dim 처리 한다.
+        if (result > 0) {
+            mView?.changeAllFieldStatus()
+        } else {
+            mView?.setToast(mActivity.getString(R.string.fail_delete))
+        }
     }
 }

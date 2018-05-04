@@ -51,7 +51,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DbHelper.DB_NAME, n
         const val COLUMNS_GOODS_TYPE = "_goods_type" // 상품 타입
         const val COLUMNS_GOODS_ON_SALE_YN = "_goods_sale" // 판매중 여부
 
-        const val UPDATE_SELECTION_ID = "ID=?"
+        const val SELECTION_ID = "${COLUMNS_ID}=?"
 
     }
 

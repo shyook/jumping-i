@@ -1,6 +1,8 @@
 package ubivelox.com.jumping.ui.goods.registration
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +16,7 @@ import ubivelox.com.jumping.ui.base.BaseActivity
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.GoodsData
 import ubivelox.com.jumping.utils.AppConsts
+import ubivelox.com.jumping.utils.TextUtility
 import ubivelox.com.jumping.utils.TimeUtility
 import java.util.*
 
@@ -24,22 +27,22 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
     /*******************************************************************************
      * Variable.
      *******************************************************************************/
-    private var mPresenter : GoodsRegistrationPresenter? = null
+    private var mPresenter: GoodsRegistrationPresenter? = null
 
-    private lateinit var mCamera : Button
-    private lateinit var mGallery : Button
-    private lateinit var mPhoto : ImageView
-    private lateinit var mName : EditText
-    private lateinit var mInputPrice : EditText
-    private lateinit var mOutputPrice : EditText
-    private lateinit var mMemo : EditText
-    private lateinit var mRegistration : Button
-    private lateinit var mDelete : Button
-    private lateinit var mIsSale : Button
-    private lateinit var mType : Spinner
+    private lateinit var mCamera: Button
+    private lateinit var mGallery: Button
+    private lateinit var mPhoto: ImageView
+    private lateinit var mName: EditText
+    private lateinit var mInputPrice: EditText
+    private lateinit var mOutputPrice: EditText
+    private lateinit var mMemo: EditText
+    private lateinit var mRegistration: Button
+    private lateinit var mDelete: Button
+    private lateinit var mIsSale: Button
+    private lateinit var mType: Spinner
 
     private var mGoodsType: Int = -1
-    private var mID: Int = -1
+    private var mIsOnSale = false // 현재 판매중 여부
 
     /*******************************************************************************
      * Life Cycle.
@@ -65,7 +68,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
             return
         }
 
-        when(requestCode) {
+        when (requestCode) {
             AppConsts.PICK_FROM_CAMERA -> mPresenter?.cropImageForCamera(this)
             AppConsts.PICK_FROM_GALLERY -> mPresenter?.cropImageForGallery(this, data)
             AppConsts.PICK_FROM_IMAGE -> saveImage(data)
@@ -79,6 +82,9 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         return this
     }
 
+    /**
+     * UI를 초기화 한다.
+     */
     override fun init() {
         mPresenter = GoodsRegistrationPresenter().apply {
             attachView(this@GoodsRegistrationActivity)
@@ -113,7 +119,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mPhoto.tag = ""
 
         mIsSale = findViewById(R.id.on_sale_bt) as Button
-        mIsSale.tag = false
+        mIsOnSale = false
 
         val intent = intent
         var id = -1
@@ -145,15 +151,24 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
 
     }
 
+    /**
+     * 수정 / 삭제를 위해 들어온 경우 id에 해당하는 데이터를 요청한다.
+     */
     fun initData(id: Int) {
         // 데이터를 불러온다
         mPresenter?.loadData(id)
     }
 
+    /**
+     * Toast팝업 디스플레이
+     */
     override fun setToast(toString: String) {
         Toast.makeText(this, toString, Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * 모든 위젯의 내용을 초기화 한다.
+     */
     override fun clearAllField() {
         mPhoto.setImageURI(null)
         mPhoto.tag = ""
@@ -162,9 +177,12 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mOutputPrice.text = null
         mName.text = null
         mType.setSelection(0)
-        mIsSale.tag = false
+        mIsOnSale = false
     }
 
+    /**
+     * 각 필드의 값을 채운다.
+     */
     override fun setGoodsInfo(data: GoodsData) {
         mInputPrice.setText(data.inputPrice.toString())
         mOutputPrice.setText(data.outputPrice.toString())
@@ -177,14 +195,41 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         // 판매중인 상품인경우 판매중지 이름의 버튼을 디스플레이 한다
         if (data.isSale) {
             mIsSale.setText(R.string.not_sales)
-            mIsSale.tag = true
+            mIsOnSale = true
         }
 
+    }
+
+    /**
+     * 판매 여부에 따라 전체 필드를 enable / disable 처리 한다.
+     */
+    override fun changeAllFieldStatus() {
+        mPhoto.isEnabled = mIsOnSale
+        mMemo.isEnabled = mIsOnSale
+        mInputPrice.isEnabled = mIsOnSale
+        mOutputPrice.isEnabled = mIsOnSale
+        mName.isEnabled = mIsOnSale
+        mType.isEnabled = mIsOnSale
+        mCamera.isEnabled = mIsOnSale
+        mGallery.isEnabled = mIsOnSale
+        mRegistration.isEnabled = mIsOnSale
+
+        if (mIsOnSale) {
+            // 판매중
+            mIsSale.setText(R.string.not_sales)
+        } else {
+            // Dim처리
+            mIsSale.setText(R.string.on_sales)
+        }
     }
 
     /*******************************************************************************
      * Inner Method.
      *******************************************************************************/
+    /**
+     * 상품 타입을 spinner에 셋팅 한다.
+     * 상품 목록이 늘어나면 AppConst의 내용도 변경 필요
+     */
     private fun requestGoodsType() {
         val oItems = resources.getStringArray(R.array.goods_type_items)
         val oAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, oItems)
@@ -199,7 +244,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
                 Log.i("shyook", "selectedItem : " + selectedItem + "position : " + p2)
                 if (p2 > 0) {
                     Toast.makeText(this@GoodsRegistrationActivity, selectedItem, Toast.LENGTH_SHORT).show()
-                    when(p2) {
+                    when (p2) {
                         1 -> mGoodsType = AppConsts.GOODS_TYPE_PARENT_DRINK
                         2 -> mGoodsType = AppConsts.GOODS_TYPE_DRINK
                         3 -> mGoodsType = AppConsts.GOODS_TYPE_COOKIE
@@ -213,6 +258,9 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         }
     }
 
+    /**
+     * 이미지를 디스플레이 및 저장을 위한 태그값을 셋팅한다.
+     */
     private fun saveImage(data: Intent?) {
         Log.i("shyook", "saveImage() : " + data?.extras)
         mPhoto.setImageURI(null)
@@ -220,16 +268,49 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mPhoto.tag = data?.data.toString()
     }
 
+    /**
+     * 클릭 이벤트를 처리한다.
+     */
     private var mClickListener = View.OnClickListener {
-        when(it.id) {
+        when (it.id) {
             R.id.take_photo_bt -> mPresenter?.doTakePhotoAction(this)
             R.id.move_gallery_bt -> mPresenter?.getGalleryAction(this)
             R.id.registration_bt -> getAllFiledData()
-            R.id.delete_bt -> mPresenter?.doDeleteAction(mPresenter?.getLoadGoodsID())
-            R.id.on_sale_bt -> mPresenter?.doChangeSaleAction(mIsSale.tag)
+            R.id.delete_bt -> askGoodsInfoDelete(mPresenter?.getLoadGoodsID()!!)
+            R.id.on_sale_bt -> mPresenter?.doChangeSaleAction(changeSaleTag())
         }
     }
 
+    /**
+     * 판매중 / 판매중지에 대한 버튼 토글
+     */
+    private fun changeSaleTag(): String {
+        mIsOnSale = !mIsOnSale
+
+        return TextUtility.getBooleanToString(mIsOnSale)
+    }
+
+    /**
+     * 해당 상품을 삭제 할지 팝업으로 알린다.
+     */
+    private fun askGoodsInfoDelete(id: Int) {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(R.string.dialog_title)
+        dialog.setPositiveButton(R.string.dialog_yes, DialogInterface.OnClickListener { dialogInterface: DialogInterface, i: Int ->
+            if (i == AlertDialog.BUTTON_POSITIVE) {
+                mPresenter?.doDeleteAction(id)
+            }
+        })
+        dialog.setNegativeButton(R.string.dialog_no, DialogInterface.OnClickListener { dialogInterface: DialogInterface?, i: Int ->
+
+        })
+        dialog.setMessage(R.string.is_delete_info)
+        dialog.create().show()
+    }
+
+    /**
+     * data 저장을 위해 각 필드의 값을 읽어 온다
+     */
     private fun getAllFiledData() {
         Log.v("shyook", "save goods data")
         val name = mName.text.toString()
@@ -238,7 +319,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         try {
             inputPrice = mInputPrice.text.toString().toIntOrNull()!!
             outputPrice = mOutputPrice.text.toString().toIntOrNull()!!
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             Log.e("shyook", "Price is Null")
         }
         // 이름은 필수 입력 사항으로 이름이 없는 경우 저장 하지 않음
@@ -252,7 +333,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
             return
         }
 
-        if (! (mGoodsType >= AppConsts.GOODS_TYPE_PARENT_DRINK && mGoodsType <= AppConsts.GOODS_TYPE_FROZEN_FOOD)) {
+        if (!(mGoodsType >= AppConsts.GOODS_TYPE_PARENT_DRINK && mGoodsType <= AppConsts.GOODS_TYPE_FROZEN_FOOD)) {
             setToast(getText(R.string.input_type_please).toString())
             return
         }

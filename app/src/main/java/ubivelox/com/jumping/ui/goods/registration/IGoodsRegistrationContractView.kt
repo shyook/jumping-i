@@ -10,4 +10,5 @@ interface IGoodsRegistrationContractView : IBaseView {
     fun setToast(toString: String)
     fun clearAllField()
     fun setGoodsInfo(data: GoodsData)
+    fun changeAllFieldStatus()
 }
