@@ -7,4 +7,6 @@ import ubivelox.com.jumping.ui.base.IBaseView
  */
 interface ICustomerEnteranceListContractView : IBaseView {
     fun setNewDate(format: String)
+    fun askCustomerEnteranceInfoModify(id: Int)
+
 }

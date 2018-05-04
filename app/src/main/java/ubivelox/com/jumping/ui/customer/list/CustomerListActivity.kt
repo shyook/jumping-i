@@ -75,7 +75,7 @@ class CustomerListActivity : BaseActivity(), ICustomerListContractView {
         dialog.setNegativeButton(R.string.dialog_no, DialogInterface.OnClickListener{ dialogInterface: DialogInterface?, i: Int ->
 
         })
-        dialog.setMessage(R.string.is_modify_customer_info)
+        dialog.setMessage(R.string.is_modify_info)
         dialog.create().show()
     }
 

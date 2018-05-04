@@ -49,6 +49,9 @@
     <string name="gallery">갤러리</string>
     <string name="registration">등록</string>
     <string name="modify">수정</string>
+    <string name="delete">삭제</string>
+    <string name="on_sales">판매중</string>
+    <string name="not_sales">판매중지</string>
     <string name="permission_storage">파일 쓰기 접근 권한이 필요해요</string>
     <string name="permission_setting">[설정] > [권한] 에서 권한을 허용할 수 있어요.</string>
     <string name="permission_granted">권한 허가</string>
@@ -93,7 +96,9 @@
     <string name="display_no_phone_number">전화번호 없음</string>
     <string name="display_phone">전화번호 : %s</string>
     <string name="display_phone_with_parent">전화번호 : %1$s\n부모님 전화번호 : %2$s</string>
-    <string name="is_modify_customer_info">고객 정보를 수정 하시겠습니까?</string>
+    <string name="is_modify_info">정보를 수정 하시겠습니까?</string>
     <string name="play_time">놀이시간 : %1$s ~ %2$s</string>
     <string name="total_payment">금액 : %d원</string>
+    <string name="display_goods_name">상품명 : %s</string>
+    <string name="display_price">매입금액 : %1$d\n판매금액 : %2$d</string>
 </resources>

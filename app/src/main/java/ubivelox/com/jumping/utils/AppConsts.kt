@@ -35,8 +35,10 @@ class AppConsts {
         const val GOODS_TYPE_FROZEN_FOOD = 35 // 냉동 식품
 
         const val EXTRA_CUSTOMER_NAME = "EXTRA_CUSTOMER_NAME"
-        const val EXTRA_IS_PLAY_TIME = "EXTRA_IS_PLAY_TIME"
+        // const val EXTRA_IS_PLAY_TIME = "EXTRA_IS_PLAY_TIME"
         const val EXTRA_CUSTOMER_ID =  "EXTRA_CUSTOMER_ID"
+        const val EXTRA_GOODS_ID = "EXTRA_GOODS_ID"
+        const val EXTRA_CUSTOMER_ENTERANCE_ID = "EXTRA_CUSTOMER_ENTERANCE_ID"
 
         val TIME_TO_PRICE = hashMapOf(
                 R.string.customer_using_play_30_minute to 1500
@@ -44,6 +46,16 @@ class AppConsts {
                 , R.string.customer_using_play_two_hour to 5000
                 , R.string.customer_using_play_three_hour to 7000
                 , R.string.customer_using_play_four_hour to 9000
+        )
+
+        val GOODS_TYPE_TO_LIST = hashMapOf(
+                GOODS_TYPE_PARENT_DRINK to 1
+                , GOODS_TYPE_DRINK to 2
+                , GOODS_TYPE_COOKIE to 3
+                , GOODS_TYPE_NOODLE to 4
+                , GOODS_TYPE_ICE_CREAM to 5
+                , GOODS_TYPE_FROZEN_FOOD to 6
+
         )
 
         // TODO enum 사용 방법을 아직 모름...

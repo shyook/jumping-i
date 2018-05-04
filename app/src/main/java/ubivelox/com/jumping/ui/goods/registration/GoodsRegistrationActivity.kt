@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.goods.registration
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.text.TextUtils
@@ -33,9 +34,12 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
     private lateinit var mOutputPrice : EditText
     private lateinit var mMemo : EditText
     private lateinit var mRegistration : Button
+    private lateinit var mDelete : Button
+    private lateinit var mIsSale : Button
     private lateinit var mType : Spinner
 
     private var mGoodsType: Int = -1
+    private var mID: Int = -1
 
     /*******************************************************************************
      * Life Cycle.
@@ -45,7 +49,6 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         setContentView(R.layout.activity_customer_registration)
 
         init()
-        initData()
     }
 
     override fun onDestroy() {
@@ -89,13 +92,7 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mRegistration.setOnClickListener(mClickListener)
 
         mName = findViewById(R.id.registration_name_et) as EditText
-        val intent = intent
-        if (intent != null) {
-            val name = intent.getStringExtra(AppConsts.EXTRA_CUSTOMER_NAME)
-            if (!TextUtils.isEmpty(name)) {
-                mName.setText(name)
-            }
-        }
+
         // 매입 금액
         (findViewById(R.id.registration_first_field_tv) as TextView).setText(R.string.input_price)
         mInputPrice = findViewById(R.id.registration_first_field_et) as EditText
@@ -114,13 +111,43 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mMemo = findViewById(R.id.registration_add_memo_et) as EditText
         mPhoto = findViewById(R.id.items_image) as ImageView
         mPhoto.tag = ""
-    }
 
-    override fun initData() {
+        mIsSale = findViewById(R.id.on_sale_bt) as Button
+        mIsSale.tag = false
+
+        val intent = intent
+        var id = -1
+        if (intent != null) {
+            val name = intent.getStringExtra(AppConsts.EXTRA_CUSTOMER_NAME)
+            if (!TextUtils.isEmpty(name)) {
+                mName.setText(name)
+            }
+
+            // id가 존재하면 리스트에서 상세로 수정을 위해 이동한 케이스임.
+            id = intent.getIntExtra(AppConsts.EXTRA_GOODS_ID, -1)
+            if (id != -1) {
+                mRegistration.setText(R.string.modify)
+
+                mDelete = findViewById(R.id.delete_bt) as Button
+                mDelete.visibility = View.VISIBLE
+                mDelete.setOnClickListener(mClickListener)
+
+                mIsSale.visibility = View.VISIBLE
+                mIsSale.setOnClickListener(mClickListener)
+            }
+        }
+
         // 상품 유형 셋팅
         requestGoodsType()
-        //
-        mPresenter?.loadData()
+        if (id > 0) {
+            initData(id)
+        }
+
+    }
+
+    fun initData(id: Int) {
+        // 데이터를 불러온다
+        mPresenter?.loadData(id)
     }
 
     override fun setToast(toString: String) {
@@ -135,6 +162,24 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
         mOutputPrice.text = null
         mName.text = null
         mType.setSelection(0)
+        mIsSale.tag = false
+    }
+
+    override fun setGoodsInfo(data: GoodsData) {
+        mInputPrice.setText(data.inputPrice.toString())
+        mOutputPrice.setText(data.outputPrice.toString())
+        mName.setText(data.name)
+        mType.setSelection(AppConsts.GOODS_TYPE_TO_LIST.get(data.goodsType)!!)
+        mPhoto.setImageURI(Uri.parse(data.imagePath))
+        mPhoto.tag = data.imagePath
+        mMemo.setText(data.memo)
+
+        // 판매중인 상품인경우 판매중지 이름의 버튼을 디스플레이 한다
+        if (data.isSale) {
+            mIsSale.setText(R.string.not_sales)
+            mIsSale.tag = true
+        }
+
     }
 
     /*******************************************************************************
@@ -180,6 +225,8 @@ class GoodsRegistrationActivity : BaseActivity(), IGoodsRegistrationContractView
             R.id.take_photo_bt -> mPresenter?.doTakePhotoAction(this)
             R.id.move_gallery_bt -> mPresenter?.getGalleryAction(this)
             R.id.registration_bt -> getAllFiledData()
+            R.id.delete_bt -> mPresenter?.doDeleteAction(mPresenter?.getLoadGoodsID())
+            R.id.on_sale_bt -> mPresenter?.doChangeSaleAction(mIsSale.tag)
         }
     }
 

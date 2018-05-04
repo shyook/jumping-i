@@ -1,7 +1,8 @@
 package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.app.Activity
-import android.app.DatePickerDialog
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +12,6 @@ import android.widget.Button
 import android.widget.TextView
 import ubivelox.com.jumping.R
 import ubivelox.com.jumping.ui.base.BaseActivity
-import ubivelox.com.jumping.ui.customer.list.CustomerListAdapter
 import ubivelox.com.jumping.utils.TimeUtility
 
 /**
@@ -89,6 +89,21 @@ class CustomerEnteranceListActivity : BaseActivity(), ICustomerEnteranceListCont
 
     fun initData(date: String) {
         mPresenter?.loadData(date)
+    }
+
+    override fun askCustomerEnteranceInfoModify(id: Int) {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(R.string.dialog_title)
+        dialog.setPositiveButton(R.string.dialog_yes, DialogInterface.OnClickListener { dialogInterface: DialogInterface, i: Int ->
+            if (i == AlertDialog.BUTTON_POSITIVE) {
+                mPresenter?.goCustomerEnteranceDetail(id)
+            }
+        })
+        dialog.setNegativeButton(R.string.dialog_no, DialogInterface.OnClickListener{ dialogInterface: DialogInterface?, i: Int ->
+
+        })
+        dialog.setMessage(R.string.is_modify_info)
+        dialog.create().show()
     }
 
     /*******************************************************************************

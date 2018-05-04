@@ -2,6 +2,7 @@ package ubivelox.com.jumping.ui.customer.enterance.list
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.util.Log
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
@@ -10,8 +11,11 @@ import ubivelox.com.jumping.database.DbHelper
 import ubivelox.com.jumping.ui.base.BasePresenter
 import ubivelox.com.jumping.ui.common.IUtils
 import ubivelox.com.jumping.ui.common.IAdapterContract
+import ubivelox.com.jumping.ui.customer.enterance.CustomerEnteranceActivity
+import ubivelox.com.jumping.ui.customer.registration.CustomerRegistrationActivity
 import ubivelox.com.jumping.ui.data.CustomerData
 import ubivelox.com.jumping.ui.data.CustomerEnteranceData
+import ubivelox.com.jumping.utils.AppConsts
 import ubivelox.com.jumping.utils.TextUtility
 import ubivelox.com.jumping.utils.TimeUtility
 import java.text.SimpleDateFormat
@@ -106,12 +110,20 @@ class CustomerEnteranceListPresenter : BasePresenter<ICustomerEnteranceListContr
         Log.i("shyook", "Enter Date : " + SimpleDateFormat("yyyyMMdd").format(cal.time))
     }
 
+    fun goCustomerEnteranceDetail(id: Int) {
+        val intent = Intent(mActivity, CustomerEnteranceActivity::class.java)
+        intent.putExtra(AppConsts.EXTRA_CUSTOMER_ENTERANCE_ID, id)
+        mActivity?.startActivity(intent)
+    }
+
     /*******************************************************************************
      * Inner Method.
      *******************************************************************************/
     private fun onClickListener(it: Int) {
         mAdapterModel.getItem(it).let {
             // 상세 정보로 이동
+            mView?.askCustomerEnteranceInfoModify(it.id)
         }
     }
+
 }

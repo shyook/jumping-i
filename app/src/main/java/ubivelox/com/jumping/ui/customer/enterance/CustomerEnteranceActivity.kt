@@ -44,7 +44,7 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
     var mPresenter: CustomerEnterancePresenter? = null
     var mParentsTeaItems : HashMap<Int, String> = HashMap()
     var mGoodsItems : HashMap<Int, String> = HashMap()
-    var isPlaying : Boolean = false
+    // var isPlaying : Boolean = false
     var customerID : Int = 0
 
     lateinit var mStartTime : EditText
@@ -69,7 +69,7 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         setContentView(R.layout.activity_customer_entrance)
 
         init()
-        initData();
+        // initData();
     }
 
     override fun onDestroy() {
@@ -124,16 +124,6 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
 
         mEnterance = findViewById(R.id.customer_add_bt) as Button
         mEnterance.setOnClickListener(mClickListener)
-        // 추가 구매로 들어온 경우 ID를 체크한다.
-        val intent = intent
-        if (intent != null) {
-            isPlaying = intent.getBooleanExtra(AppConsts.EXTRA_IS_PLAY_TIME, false)
-            customerID = intent.getIntExtra(AppConsts.EXTRA_CUSTOMER_ID, 0)
-            if (isPlaying) {
-                // 버튼명 변경
-                mEnterance.setText(R.string.customer_enterance_add_items)
-            }
-        }
 
         mAddGoods = findViewById(R.id.customer_add_goods_spinner) as Spinner
         mAddGoodsDetail = findViewById(R.id.customer_add_goods_detail_tv) as TextView
@@ -143,19 +133,38 @@ class CustomerEnteranceActivity : BaseActivity(), ICustomerEnteranceContractView
         if (mCheckedParent.checkedRadioButtonId == R.id.accompany_no) {
             mParentDrink.isEnabled = false
         }
+
+        // 추가 구매로 들어온 경우 ID를 체크한다.
+        val intent = intent
+        var customerEnteranceId = -1
+        if (intent != null) {
+            // isPlaying = intent.getBooleanExtra(AppConsts.EXTRA_IS_PLAY_TIME, false)
+            customerEnteranceId = intent.getIntExtra(AppConsts.EXTRA_CUSTOMER_ENTERANCE_ID, -1)
+            // 버튼명 변경
+            if (customerEnteranceId > 0) {
+                mEnterance.setText(R.string.customer_enterance_add_items)
+            }
+        }
+
+        initData(customerEnteranceId)
     }
 
-    override fun initData() {
+    fun initData(id: Int) {
         // 이용 시간 셋팅
         requestUsingTimeData()
         // 전체 물건에 대한 list를 db로 부터 얻어 온다. (음료, 과자, 아이스크림, 커피, 라면 등)
         // 전체 물건 중 음료에 대한 list를 구해서 부모 음료 스피너 리스트에 넣는다 (입장료 지불 추가)
         mPresenter?.loadData()
 
-        // 목록에서 수정을 위해 들어온 경우 이전 값을 셋팅 한다.
-        if (isPlaying) {
-            mPresenter?.loadCustomerEnteranceData(customerID)
+        // id가 존재 한다는 것은 수정을 위해 들어온 케이스다.
+        if (id > 0) {
+            loadCustomerEnteranceData(id)
         }
+    }
+
+    fun loadCustomerEnteranceData(id : Int) {
+        // 목록에서 수정을 위해 들어온 경우 이전 값을 셋팅 한다.
+        mPresenter?.loadCustomerEnteranceData(id)
     }
 
     override fun displayCustomerData(oData: CustomerData) {
