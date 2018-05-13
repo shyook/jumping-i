@@ -18,6 +18,10 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import android.content.pm.ResolveInfo
+import android.content.pm.PackageManager
+
+
 
 /**
  * Created by UBIVELOX on 2018-04-25.
@@ -50,6 +54,14 @@ interface IRegistrationPresenter {
                 setImagePathUri(FileProvider.getUriForFile(mActivity, mActivity.packageName, photoFile));
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, getImagePathUri())
 
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                    val resInfoList = mActivity.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+                    for (resolveInfo in resInfoList) {
+                        val packageName = resolveInfo.activityInfo.packageName
+                        mActivity.grantUriPermission(packageName, getImagePathUri(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                }
+
                 mActivity.startActivityForResult(intent, AppConsts.PICK_FROM_CAMERA)
             }
         }
@@ -60,7 +72,7 @@ interface IRegistrationPresenter {
      * 안드로이드 N의 경우 URI 퍼미션 필요
      */
     fun cropImageForCamera(mActivity : Activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mActivity.grantUriPermission("com.android.camera", getImagePathUri(),
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
@@ -69,7 +81,7 @@ interface IRegistrationPresenter {
         intent.setDataAndType(getImagePathUri(), "image/*")
 
         val list = mActivity.packageManager.queryIntentActivities(intent, 0)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mActivity.grantUriPermission(list.get(0).activityInfo.packageName, getImagePathUri(),
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
@@ -109,7 +121,7 @@ interface IRegistrationPresenter {
             val i = Intent(intent)
             val res = list[0]
             // 안드로이드 N버전 이상부터 flag로 uri permission 전달 해야 함.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 i.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
